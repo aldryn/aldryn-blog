@@ -12,14 +12,15 @@ class BlogPlugin(CMSPluginBase):
     module = 'Blog'
 
 
-class LastEntriesPlugin(BlogPlugin):
+class LatestEntriesPlugin(BlogPlugin):
 
-    render_template = 'aldryn_blog/last_entries.html'
-    name = _('Last Blog Entries')
-    model = models.LastEntriesPlugin
+    render_template = 'aldryn_blog/latest_entries.html'
+    name = _('Latest Blog Entries')
+    model = models.LatestEntriesPlugin
+    filter_horizontal = ['tags']
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
         return context
 
-plugin_pool.register_plugin(LastEntriesPlugin)
+plugin_pool.register_plugin(LatestEntriesPlugin)

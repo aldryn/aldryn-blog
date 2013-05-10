@@ -19,27 +19,39 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('aldryn_blog', ['Post'])
 
-        # Adding model 'LastEntriesPlugin'
-        db.create_table('cmsplugin_lastentriesplugin', (
+        # Adding model 'LatestEntriesPlugin'
+        db.create_table('cmsplugin_latestentriesplugin', (
             ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
             ('last_entries_number', self.gf('django.db.models.fields.IntegerField')()),
         ))
-        db.send_create_signal('aldryn_blog', ['LastEntriesPlugin'])
+        db.send_create_signal('aldryn_blog', ['LatestEntriesPlugin'])
+
+        # Adding M2M table for field tags on 'LatestEntriesPlugin'
+        db.create_table('aldryn_blog_latestentriesplugin_tags', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('latestentriesplugin', models.ForeignKey(orm['aldryn_blog.latestentriesplugin'], null=False)),
+            ('tag', models.ForeignKey(orm['taggit.tag'], null=False))
+        ))
+        db.create_unique('aldryn_blog_latestentriesplugin_tags', ['latestentriesplugin_id', 'tag_id'])
 
 
     def backwards(self, orm):
         # Deleting model 'Post'
         db.delete_table('aldryn_blog_post')
 
-        # Deleting model 'LastEntriesPlugin'
-        db.delete_table('cmsplugin_lastentriesplugin')
+        # Deleting model 'LatestEntriesPlugin'
+        db.delete_table('cmsplugin_latestentriesplugin')
+
+        # Removing M2M table for field tags on 'LatestEntriesPlugin'
+        db.delete_table('aldryn_blog_latestentriesplugin_tags')
 
 
     models = {
-        'aldryn_blog.lastentriesplugin': {
-            'Meta': {'object_name': 'LastEntriesPlugin', 'db_table': "'cmsplugin_lastentriesplugin'", '_ormbases': ['cms.CMSPlugin']},
+        'aldryn_blog.latestentriesplugin': {
+            'Meta': {'object_name': 'LatestEntriesPlugin', 'db_table': "'cmsplugin_latestentriesplugin'", '_ormbases': ['cms.CMSPlugin']},
             'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
-            'last_entries_number': ('django.db.models.fields.IntegerField', [], {})
+            'last_entries_number': ('django.db.models.fields.IntegerField', [], {}),
+            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['taggit.Tag']", 'symmetrical': 'False'})
         },
         'aldryn_blog.post': {
             'Meta': {'ordering': "['-publication_date']", 'object_name': 'Post'},
