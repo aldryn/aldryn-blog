@@ -1,0 +1,9 @@
+<ul class="blog-post-links">
+    {% for post in posts %}
+        <li class="blog-post-link">
+            <span>{{ post.publication_date|date }}</span>
+            <span class="joiner">&ndash;</span>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </li>
+    {% endfor %}
+</ul>

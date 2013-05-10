@@ -1,0 +1,14 @@
+name: Blog
+package-name: aldryn-blog
+url: https://github.com/aldryn/aldryn-blog
+author:
+  name: Divio AG
+  url: https://www.divio.ch
+installed-apps:
+  - taggit
+  - aldryn_blog
+version: 0.0.1
+description: Adds blogging abilities to django CMS
+license:
+  name: BSD
+  text: !literal-include LICENSE.txt
