@@ -34,7 +34,7 @@ class Post(models.Model):
                   'month': self.publication_date.month,
                   'day': self.publication_date.day,
                   'slug': self.slug}
-        return reverse('aldryn-blog:post-detail', kwargs=kwargs)
+        return reverse('post-detail', kwargs=kwargs)
 
     class Meta:
         ordering = ['-publication_date']

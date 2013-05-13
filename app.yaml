@@ -7,7 +7,7 @@ author:
 installed-apps:
   - taggit
   - aldryn_blog
-version: 0.0.3
+version: 0.0.4
 description: Adds blogging abilities to django CMS
 license:
   name: BSD
