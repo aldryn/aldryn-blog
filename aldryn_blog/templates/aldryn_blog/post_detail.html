@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "aldryn_blog/base.html" %}
 {% load placeholder_tags %}
 
-{% block base_content %}
+{% block blog_content %}
     {{ post.title }}
     {% render_placeholder post.content %}
 {% endblock %}
