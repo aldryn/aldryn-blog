@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
         # Adding model 'LatestEntriesPlugin'
         db.create_table('cmsplugin_latestentriesplugin', (
             ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('last_entries_number', self.gf('django.db.models.fields.IntegerField')()),
+            ('latest_entries', self.gf('django.db.models.fields.IntegerField')()),
         ))
         db.send_create_signal('aldryn_blog', ['LatestEntriesPlugin'])
 
@@ -50,8 +50,8 @@ class Migration(SchemaMigration):
         'aldryn_blog.latestentriesplugin': {
             'Meta': {'object_name': 'LatestEntriesPlugin', 'db_table': "'cmsplugin_latestentriesplugin'", '_ormbases': ['cms.CMSPlugin']},
             'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
-            'last_entries_number': ('django.db.models.fields.IntegerField', [], {}),
-            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['taggit.Tag']", 'symmetrical': 'False'})
+            'latest_entries': ('django.db.models.fields.IntegerField', [], {}),
+            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['taggit.Tag']", 'symmetrical': 'False', 'blank': 'True'})
         },
         'aldryn_blog.post': {
             'Meta': {'ordering': "['-publication_date']", 'object_name': 'Post'},

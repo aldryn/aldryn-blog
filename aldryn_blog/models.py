@@ -47,15 +47,15 @@ class Post(models.Model):
 
 class LatestEntriesPlugin(CMSPlugin):
 
-    last_entries_number = models.IntegerField()
-    tags = models.ManyToManyField('taggit.Tag')
+    latest_entries = models.IntegerField(help_text=_('The number of latests entries to be displayed.'))
+    tags = models.ManyToManyField('taggit.Tag', blank=True, help_text=_('Show only the blog posts tagged with chosen tags.'))
 
     def __unicode__(self):
-        return u'%s' % (self.last_entries_number,)
+        return u'%s' % (self.latest_entries,)
 
     def copy_relations(self, oldinstance):
         self.tags = oldinstance.tags.all()
 
     def get_posts(self):
         return Post.objects.filter(publication_date__lte=datetime.date.today(),
-                                   tags__in=self.tags.all())[:self.last_entries_number]
+                                   tags__in=self.tags.all())[:self.latest_entries]
