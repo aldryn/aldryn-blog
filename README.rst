@@ -15,9 +15,9 @@ Choose a site you want to install the add-on to from the dashboard. Then go to `
 
 Redeploy the site.
 
-You can add post messages in the admin interface. Search for the label ``Aldryn_Blog``.
+You can add post messages in the admin interface now. Search for the label ``Aldryn_Blog``.
 
-In order to display then create a CMS page and install the app there (choose ``Blog`` from the ``Advanced Settings -> Application`` dropdown).
+In order to display them, create a CMS page and install the app there (choose ``Blog`` from the ``Advanced Settings -> Application`` dropdown).
 
 Now redeploy the site again.
 
