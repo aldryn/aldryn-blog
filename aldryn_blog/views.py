@@ -9,6 +9,7 @@ class ArchiveView(ArchiveIndexView):
 
     model = Post
     date_field = 'publication_date'
+    allow_empty = True
 
 
 class PostDetailView(DetailView):

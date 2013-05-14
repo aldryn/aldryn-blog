@@ -12,6 +12,13 @@ import datetime
 from taggit.managers import TaggableManager
 
 
+class PublishedManager(models.Manager):
+
+    def get_query_set(self):
+        posts = super(PublishedManager, self).get_query_set()
+        return posts.filter(publication_date__lte=datetime.date.today())
+
+
 class Post(models.Model):
 
     title = models.CharField(_('Title'), max_length=255)
@@ -25,6 +32,7 @@ class Post(models.Model):
 
     objects = models.Manager()
     tags = TaggableManager(blank=True)
+    published = PublishedManager()
 
     def __unicode__(self):
         return self.title
@@ -47,7 +55,7 @@ class Post(models.Model):
 
 class LatestEntriesPlugin(CMSPlugin):
 
-    latest_entries = models.IntegerField(help_text=_('The number of latests entries to be displayed.'))
+    latest_entries = models.IntegerField(default=5, help_text=_('The number of latests entries to be displayed.'))
     tags = models.ManyToManyField('taggit.Tag', blank=True, help_text=_('Show only the blog posts tagged with chosen tags.'))
 
     def __unicode__(self):
@@ -57,5 +65,8 @@ class LatestEntriesPlugin(CMSPlugin):
         self.tags = oldinstance.tags.all()
 
     def get_posts(self):
-        return Post.objects.filter(publication_date__lte=datetime.date.today(),
-                                   tags__in=self.tags.all())[:self.latest_entries]
+        tags = list(self.tags.all())
+        posts = Post.published.all()
+        if tags:
+            posts = posts.filter(tags__in=tags)
+        return posts[:self.latest_entries]
