@@ -5,13 +5,18 @@ from django.views.generic.detail import DetailView
 from aldryn_blog.models import Post
 
 
-class ArchiveView(ArchiveIndexView):
+class PublishMixin(object):
+    def get_allow_future(self):
+        return self.request.user.is_staff or self.request.user.is_superuser
+
+
+class ArchiveView(PublishMixin, ArchiveIndexView):
 
     model = Post
     date_field = 'publication_date'
     allow_empty = True
 
 
-class PostDetailView(DetailView):
+class PostDetailView(PublishMixin, DetailView):
 
     model = Post
