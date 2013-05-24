@@ -7,7 +7,7 @@ from aldryn_blog.models import Post
 
 
 class PostAdmin(PlaceholderAdmin):
-
+    render_placeholder_language_tabs = False
     raw_id_fields = ['author']
 
     def add_view(self, request, *args, **kwargs):
