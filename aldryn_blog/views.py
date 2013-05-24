@@ -13,6 +13,7 @@ class PublishMixin(object):
 class ArchiveView(PublishMixin, ArchiveIndexView):
 
     model = Post
+    queryset = Post.objects.select_related('key_visual')
     date_field = 'publication_date'
     allow_empty = True
 
@@ -20,3 +21,4 @@ class ArchiveView(PublishMixin, ArchiveIndexView):
 class PostDetailView(PublishMixin, DetailView):
 
     model = Post
+    queryset = Post.objects.select_related('key_visual')

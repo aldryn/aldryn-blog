@@ -4,6 +4,8 @@ from aldryn_blog import __version__
 
 REQUIREMENTS = [
     'django-taggit',
+    'django-filer',
+    'djangocms-text-ckeditor',
 ]
 
 CLASSIFIERS = [
