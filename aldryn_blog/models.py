@@ -75,3 +75,10 @@ class LatestEntriesPlugin(CMSPlugin):
         if tags:
             posts = posts.filter(tags__in=tags)
         return posts[:self.latest_entries]
+
+def force_language(sender, instance, **kwargs):
+    # TODO: make the language code configurable?
+    if instance.content_id:
+        print CMSPlugin.objects.filter(placeholder=instance.content_id).update(language='en')
+
+models.signals.post_save.connect(force_language, Post)
