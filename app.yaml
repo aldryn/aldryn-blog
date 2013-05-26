@@ -7,6 +7,9 @@ author:
 installed-apps:
   - taggit
   - aldryn_blog
+  - easy_thumbnails
+  - filer
+  - djangocms_text_ckeditor
 version: 0.0.5
 description: Adds blogging abilities to django CMS
 license:
