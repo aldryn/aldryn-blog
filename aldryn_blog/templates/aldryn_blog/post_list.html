@@ -1,0 +1,5 @@
+{% extends "aldryn_blog/base.html" %}
+
+{% block blog_content %}
+    {% include "aldryn_blog/snippets/_post_list.html" with posts=object_list %}
+{% endblock %}
