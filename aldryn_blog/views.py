@@ -40,3 +40,8 @@ class PostDetailView(LanguageMixin, PublishMixin, DetailView):
     model = Post
     queryset = Post.objects.select_related('key_visual')
 
+    def get(self, request, *args, **kwargs):
+        response = super(PostDetailView, self).get(request, *args, **kwargs)
+        if 'post' in response.context_data:
+            request.current_aldryn_blog_entry = response.context_data['post']
+        return response
