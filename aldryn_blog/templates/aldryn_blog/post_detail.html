@@ -2,6 +2,8 @@
 {% load placeholder_tags %}
 
 {% block blog_content %}
-    {{ post.title }}
+    <h1>{{ post.title }}</h1>
+    {% if post.key_visual_id %}<img src="{{ post.key_visual.url }}" alt=""/>{% endif %}
+    {{ post.lead_in|safe }}
     {% render_placeholder post.content %}
 {% endblock %}

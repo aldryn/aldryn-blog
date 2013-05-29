@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -8,7 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
 
-import datetime
+from djangocms_text_ckeditor.fields import HTMLField
+from filer.fields.image import FilerImageField
 from taggit.managers import TaggableManager
 
 
@@ -25,6 +28,8 @@ class Post(models.Model):
     slug = models.CharField(_('Slug'), max_length=255, unique=True, blank=True,
                             help_text=_('Used in the URL. If changed, the URL will change. '
                                         'Clean it to have it re-created.'))
+    key_visual = FilerImageField(verbose_name=_('key visual'), blank=True, null=True)
+    lead_in = HTMLField(_('lead-in'), help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'), default='')
     content = PlaceholderField('blog_post_content')
     author = models.ForeignKey(User)
     publication_date = models.DateField(default=datetime.date.today,
@@ -70,3 +75,10 @@ class LatestEntriesPlugin(CMSPlugin):
         if tags:
             posts = posts.filter(tags__in=tags)
         return posts[:self.latest_entries]
+
+def force_language(sender, instance, **kwargs):
+    # TODO: make the language code configurable?
+    if instance.content_id:
+        print CMSPlugin.objects.filter(placeholder=instance.content_id).update(language='en')
+
+models.signals.post_save.connect(force_language, Post)
