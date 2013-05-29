@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -28,10 +29,12 @@ class Post(models.Model):
     slug = models.CharField(_('Slug'), max_length=255, unique=True, blank=True,
                             help_text=_('Used in the URL. If changed, the URL will change. '
                                         'Clean it to have it re-created.'))
+    language = models.CharField(_('language'), max_length=5, null=True, blank=True, choices=settings.LANGUAGES,
+                                help_text=_('leave empty to display in all languages'))
     key_visual = FilerImageField(verbose_name=_('key visual'), blank=True, null=True)
     lead_in = HTMLField(_('lead-in'), help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'), default='')
     content = PlaceholderField('blog_post_content')
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, verbose_name=_('Author'))
     publication_date = models.DateField(default=datetime.date.today,
                                         help_text=_('Used in the URL. If changed, the URL will change.'))
 
@@ -70,8 +73,8 @@ class LatestEntriesPlugin(CMSPlugin):
         self.tags = oldinstance.tags.all()
 
     def get_posts(self):
+        posts = Post.published.all().filter(models.Q(language__isnull=True) | models.Q(language=self.language()))
         tags = list(self.tags.all())
-        posts = Post.published.all()
         if tags:
             posts = posts.filter(tags__in=tags)
         return posts[:self.latest_entries]
