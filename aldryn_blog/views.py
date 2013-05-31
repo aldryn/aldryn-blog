@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.db import models
 from django.utils.translation import get_language
 from django.views.generic.dates import ArchiveIndexView
@@ -26,6 +27,21 @@ class ArchiveView(LanguageMixin, PublishMixin, ArchiveIndexView):
     queryset = Post.objects.select_related('key_visual')
     date_field = 'publication_date'
     allow_empty = True
+
+    def get_queryset(self):
+        qs = super(ArchiveView, self).get_queryset()
+        if 'month' in self.kwargs:
+            qs = qs.filter(publication_date__month=self.kwargs['month'])
+        if 'year' in self.kwargs:
+            qs = qs.filter(publication_date__year=self.kwargs['year'])
+        return qs
+
+    def get_context_data(self, **kwargs):
+        kwargs['year'] = int(self.kwargs.get('year')) if 'year' in self.kwargs else None
+        kwargs['month'] = int(self.kwargs.get('month')) if 'month' in self.kwargs else None
+        if kwargs['year']:
+            kwargs['archive_date'] = datetime.date(kwargs['year'], kwargs['month'] or 1, 1)
+        return super(ArchiveView, self).get_context_data(**kwargs)
 
 
 class TaggedListView(LanguageMixin, ListView):
