@@ -1,0 +1,18 @@
+{% load url from future %}
+{% regroup dates by year as years %}
+<ul>
+	{% for current_year in years %}
+		<li{% if current_year.grouper == year %} class="active"{% endif %}>
+			<a href="{% url 'archive-year' year=current_year.grouper %}">{{ current_year.grouper }}</a>
+			{% if current_year.grouper == year %}
+				<ul class="submenu">
+				{% for d in current_year.list %}
+					<li{% if d.month == month %} class="active"{% endif %}>
+						<a href="{% url 'archive-month' year=current_year.grouper month=d.month %}">{{ d|date:"F" }}</a>
+					</li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>
