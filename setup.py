@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup
+from setuptools import setup, find_packages
 from aldryn_blog import __version__
 
 REQUIREMENTS = [
@@ -28,7 +28,7 @@ setup(
     author='Divio AG',
     author_email='info@divio.ch',
     url='https://github.com/aldryn/aldryn-blog',
-    packages=['aldryn_blog'],
+    packages=find_packages(),
     license='LICENSE.txt',
     platforms=['OS Independent'],
     install_requires=REQUIREMENTS,
