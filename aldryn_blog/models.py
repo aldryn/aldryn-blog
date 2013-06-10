@@ -73,7 +73,7 @@ class LatestEntriesPlugin(CMSPlugin):
         self.tags = oldinstance.tags.all()
 
     def get_posts(self):
-        posts = Post.published.all().filter(models.Q(language__isnull=True) | models.Q(language=self.language()))
+        posts = Post.published.all().filter(models.Q(language__isnull=True) | models.Q(language=self.language))
         tags = list(self.tags.all())
         if tags:
             posts = posts.filter(tags__in=tags)
