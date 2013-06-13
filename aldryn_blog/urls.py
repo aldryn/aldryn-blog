@@ -4,7 +4,8 @@ from django.conf.urls import patterns, url
 from aldryn_blog.views import ArchiveView, PostDetailView, TaggedListView
 from aldryn_blog.feeds import LatestEntriesFeed, TagFeed
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', ArchiveView.as_view(), name='latest-posts'),
     url(r'^feed/$', LatestEntriesFeed(), name='latest-posts-feed'),
     url(r'^(?P<year>\d{4})/$', ArchiveView.as_view(), name='archive-year'),
