@@ -12,6 +12,7 @@ from distutils.version import LooseVersion
 
 
 class PostAdmin(PlaceholderAdmin):
+
     render_placeholder_language_tabs = False
     list_display = ['title', 'author', 'publication_start', 'publication_end']
     date_hierarchy = 'publication_start'

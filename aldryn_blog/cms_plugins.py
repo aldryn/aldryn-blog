@@ -5,6 +5,7 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
 from aldryn_blog import models
+from aldryn_blog.forms import LatestEntriesForm
 
 
 class BlogPlugin(CMSPluginBase):
@@ -17,7 +18,7 @@ class LatestEntriesPlugin(BlogPlugin):
     render_template = 'aldryn_blog/latest_entries.html'
     name = _('Latest Blog Entries')
     model = models.LatestEntriesPlugin
-    filter_horizontal = ['tags']
+    form = LatestEntriesForm
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
