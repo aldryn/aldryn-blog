@@ -10,6 +10,7 @@ installed-apps:
   - easy_thumbnails
   - filer
   - djangocms_text_ckeditor
+  - django_select2
 version: 0.0.5
 description: Adds blogging abilities to django CMS
 license:

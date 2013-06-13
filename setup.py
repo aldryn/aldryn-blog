@@ -5,6 +5,7 @@ from aldryn_blog import __version__
 REQUIREMENTS = [
     'django-taggit',
     'django-filer',
+    'django_select2',
     'djangocms-text-ckeditor',
 ]
 
