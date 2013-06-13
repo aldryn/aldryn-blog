@@ -4,6 +4,7 @@ import copy
 from django.conf import settings
 from django.contrib import admin
 
+from aldryn_blog.forms import PostForm
 from aldryn_blog.models import Post
 
 import cms
@@ -17,6 +18,7 @@ class PostAdmin(PlaceholderAdmin):
     list_display = ['title', 'author', 'publication_start', 'publication_end']
     date_hierarchy = 'publication_start'
     raw_id_fields = ['author']
+    form = PostForm
 
     _fieldsets = [
         (None, {
