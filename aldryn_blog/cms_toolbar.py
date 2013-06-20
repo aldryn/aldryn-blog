@@ -2,27 +2,21 @@
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from cms.toolbar.items import Item, List
-from cms.toolbar_base import CMSToolbar
 from cms.toolbar_pool import toolbar_pool
 
 
-class BlogToolbar(CMSToolbar):
-    def insert_items(self, items, toolbar, request, is_app):
-        self.is_app = is_app
-        self.request = request
-
-        self.toolbar = toolbar
-        self.can_change = True  # TODO fix
-        toolbar.can_change = self.can_change
-        menu_items = List('#', _('Blog'))
-        menu_items.items.append(Item(reverse('admin:aldryn_blog_post_add') + '?_popup', _('Add Blog Entry'), load_modal=True, active=True))
-        if hasattr(request, 'current_aldryn_blog_entry'):
-            menu_items.items.append(Item(reverse('admin:aldryn_blog_post_change', args=(self.request.current_aldryn_blog_entry.pk,)) + '?_popup', _('Edit Blog Entry'), load_modal=True))
-        else:
-            menu_items.items.append(Item('#', _('Edit Blog Enty'), load_modal=True, disabled=True))
-        items.append(menu_items)
-        return items
-
-
-toolbar_pool.register(BlogToolbar)
+@toolbar_pool.register
+def blog_toolbar(toolbar, request, is_current_app, app_name):
+    if not (is_current_app and request.user.has_perm('aldryn_blog.add_post')):
+        return
+    menu = toolbar.get_or_create_menu('blog-app', _('Blog'))
+    menu.add_modal_item(_('Add Blog Post'), reverse('admin:aldryn_blog_post_add') + '?_popup', close_on_url=reverse('admin:aldryn_blog_post_changelist'))
+    if hasattr(request, 'current_aldryn_blog_entry'):
+        menu.add_modal_item(_('Edit Blog Post'), reverse('admin:aldryn_blog_post_change', args=(request.current_aldryn_blog_entry.pk,)) + '?_popup', close_on_url=reverse('admin:aldryn_blog_post_changelist'), active=True)
+    else:
+        menu.add_modal_item(_('Edit Blog Post'), '#', active=False)
+    if toolbar.edit_mode:
+        switcher = toolbar.add_button_list('Mode Switcher', side=toolbar.RIGHT,
+                                           extra_classes=['cms_toolbar-item-cms-mode-switcher'])
+        switcher.add_button(_("Content"), '?edit', active=not toolbar.build_mode, disabled=toolbar.build_mode)
+        switcher.add_button(_("Structure"), '?build', active=toolbar.build_mode, disabled=not toolbar.build_mode)
