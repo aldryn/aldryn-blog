@@ -13,7 +13,7 @@ class ArchiveNavigation(InclusionTag):
     template = 'aldryn_blog/snippets/archive_navigation.html'
 
     def get_context(self, context, **kwargs):
-        context['dates'] = Post.published.dates('publication_date', 'month')
+        context['dates'] = Post.published.dates('publication_start', 'month')
         return context
 
 register.tag('archive_navigation', ArchiveNavigation)

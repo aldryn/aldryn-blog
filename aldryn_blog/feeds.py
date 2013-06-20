@@ -10,7 +10,7 @@ from aldryn_blog.models import Post
 class LatestEntriesFeed(Feed):
 
     def link(self):
-        return reverse('latest-posts', current_app='blog')
+        return reverse('aldryn_blog:latest-posts')
 
     def title(self):
         return _('Blog posts on %(site_name)s') % {'site_name': Site.objects.get_current().name}
