@@ -11,15 +11,38 @@ Simple blogging application. It allows you to:
 Installation
 ============
 
+Aldryn Platrofm Users
+---------------------
+
 Choose a site you want to install the add-on to from the dashboard. Then go to ``Apps -> Install app`` and click ``Install`` next to ``Blog`` app.
 
 Redeploy the site.
+
+Manuall Installation
+--------------------
+
+Run `pip install aldryn-blog`.
+
+Add below apps to `INSTALLED_APPS`: ::
+
+    INSTALLED_APPS = [
+        …
+        
+        'aldryn_blog',
+        'django_select2',
+        'taggit',
+        
+        …
+    ]
+
+Posting
+=======
 
 You can add post messages in the admin interface now. Search for the label ``Aldryn_Blog``.
 
 In order to display them, create a CMS page and install the app there (choose ``Blog`` from the ``Advanced Settings -> Application`` dropdown).
 
-Now redeploy the site again.
+Now redeploy/restart the site again.
 
 The above CMS site has become a blog post archive view.
 
