@@ -19,7 +19,7 @@ class PostTagWidget(django_select2.widgets.Select2Mixin, taggit.forms.TagWidget)
     def __init__(self, *args, **kwargs):
         options = kwargs.get('select2_options', {})
         options['tags'] = list(taggit.models.Tag.objects.values_list('name', flat=True))
-        options['tokenSeparators'] = [' ', ',']
+        options['tokenSeparators'] = [',',]
         kwargs['select2_options'] = options
         super(PostTagWidget, self).__init__(*args, **kwargs)
 

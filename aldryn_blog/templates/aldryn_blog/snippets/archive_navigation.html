@@ -4,7 +4,7 @@
 	{% for current_year in years %}
 		<li{% if current_year.grouper == year %} class="active"{% endif %}>
 			<a href="{% url 'aldryn_blog:archive-year' year=current_year.grouper %}">{{ current_year.grouper }}</a>
-			{% if current_year.grouper == year %}
+			{% if current_year.grouper == year or full_navigation %}
 				<ul class="submenu">
 				{% for d in current_year.list %}
 					<li{% if d.month == month %} class="active"{% endif %}>
