@@ -7,6 +7,8 @@ REQUIREMENTS = [
     'django-filer',
     'django_select2',
     'djangocms-text-ckeditor',
+    'django-appconf',
+    'django-classy-tags',
 ]
 
 CLASSIFIERS = [

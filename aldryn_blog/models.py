@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -13,6 +12,8 @@ from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from taggit.managers import TaggableManager
+
+from .conf import settings
 
 
 class RelatedManager(models.Manager):
@@ -50,7 +51,7 @@ class Post(models.Model):
     key_visual = FilerImageField(verbose_name=_('Key Visual'), blank=True, null=True)
     lead_in = HTMLField(_('Lead-in'),
                         help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'))
-    content = PlaceholderField('blog_post_content')
+    content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
     author = models.ForeignKey(User, verbose_name=_('Author'))
     publication_start = models.DateTimeField(_('Published Since'), default=datetime.datetime.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
@@ -73,10 +74,10 @@ class Post(models.Model):
     class Meta:
         ordering = ['-publication_start']
 
-    def save(self):
+    def save(self, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
-        return super(Post, self).save()
+        return super(Post, self).save(**kwargs)
 
 
 class LatestEntriesPlugin(CMSPlugin):
@@ -99,8 +100,9 @@ class LatestEntriesPlugin(CMSPlugin):
 
 
 def force_language(sender, instance, **kwargs):
-    # TODO: make the language code configurable?
-    if instance.content_id:
-        print CMSPlugin.objects.filter(placeholder=instance.content_id).update(language='en')
+    if issubclass(sender, CMSPlugin) and instance.placeholder.slot == 'aldryn_blog_post_content':
+        instance.language = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE
 
-models.signals.post_save.connect(force_language, Post)
+
+for model in CMSPlugin.__subclasses__():
+    models.signals.pre_save.connect(force_language, sender=model)

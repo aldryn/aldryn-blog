@@ -4,6 +4,6 @@
 {% block blog_content %}
     <h1>{{ post.title }}</h1>
     {% if post.key_visual_id %}<img src="{{ post.key_visual.url }}" alt=""/>{% endif %}
-    {{ post.lead_in|safe }}
-    {% render_placeholder post.content %}
+    <div class="lead">{{ post.lead_in|safe }}</div>
+    {% render_placeholder post.content language placeholder_language %}
 {% endblock %}

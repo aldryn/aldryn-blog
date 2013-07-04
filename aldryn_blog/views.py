@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 
+from django.conf import settings
 from django.core.urlresolvers import reverse, resolve
 from django.utils.translation import override
 from django.views.generic.dates import ArchiveIndexView
@@ -61,7 +62,6 @@ def post_language_changer(language):
 
 
 class PostDetailView(BasePostView, DetailView):
-
     def get(self, request, *args, **kwargs):
         response = super(PostDetailView, self).get(request, *args, **kwargs)
         post = response.context_data.get('post', None)
@@ -70,3 +70,7 @@ class PostDetailView(BasePostView, DetailView):
             if post.language:
                 set_language_changer(request, post_language_changer)
         return response
+
+    def get_context_data(self, **kwargs):
+        kwargs['placeholder_language'] = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE
+        return super(PostDetailView, self).get_context_data(**kwargs)
