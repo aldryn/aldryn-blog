@@ -4,13 +4,13 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 
-from dateutil.tz import tzutc
+from django.utils import timezone
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         for post in orm['aldryn_blog.Post'].objects.all():
-            post.publication_start = datetime.datetime(post.publication_date.year, post.publication_date.month, post.publication_start.day, 8, 0, 0, tzinfo=tzutc())
+            post.publication_start = datetime.datetime(post.publication_date.year, post.publication_date.month, post.publication_start.day, 8, 0, 0, tzinfo=timezone.utc)
             post.save()
 
     def backwards(self, orm):
