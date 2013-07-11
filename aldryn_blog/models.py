@@ -103,7 +103,7 @@ class LatestEntriesPlugin(CMSPlugin):
 
 
 def force_language(sender, instance, **kwargs):
-    if issubclass(sender, CMSPlugin) and instance.placeholder.slot == 'aldryn_blog_post_content':
+    if issubclass(sender, CMSPlugin) and instance.placeholder and instance.placeholder.slot == 'aldryn_blog_post_content':
         instance.language = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE
 
 
