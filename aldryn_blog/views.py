@@ -34,10 +34,7 @@ class ArchiveView(BasePostView, ArchiveIndexView):
     allow_future = True
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            qs = Post.objects.all()
-        else:
-            qs = Post.published.all()
+        qs = BasePostView.get_queryset(self) 
         if 'month' in self.kwargs:
             qs = qs.filter(publication_start__month=self.kwargs['month'])
         if 'year' in self.kwargs:
