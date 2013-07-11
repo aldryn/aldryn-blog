@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _, override
 
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
@@ -69,6 +69,9 @@ class Post(models.Model):
                   'month': self.publication_start.month,
                   'day': self.publication_start.day,
                   'slug': self.slug}
+        if self.language:
+            with override(self.language):
+                return reverse('aldryn_blog:post-detail', kwargs=kwargs)
         return reverse('aldryn_blog:post-detail', kwargs=kwargs)
 
     class Meta:
