@@ -21,9 +21,9 @@ Redeploy the site.
 Manuall Installation
 --------------------
 
-Run `pip install aldryn-blog`.
+Run ``pip install aldryn-blog``.
 
-Add below apps to `INSTALLED_APPS`: ::
+Add below apps to ``INSTALLED_APPS``: ::
 
     INSTALLED_APPS = [
         …
