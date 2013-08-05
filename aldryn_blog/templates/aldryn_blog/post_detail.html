@@ -1,9 +1,11 @@
 {% extends "aldryn_blog/base.html" %}
-{% load placeholder_tags %}
+{% load placeholder_tags thumbnail %}
 
-{% block blog_content %}
-    <h1>{{ post.title }}</h1>
-    {% if post.key_visual_id %}<img src="{{ post.key_visual.url }}" alt=""/>{% endif %}
-    <div class="lead">{{ post.lead_in|safe }}</div>
-    {% render_placeholder post.content language placeholder_language %}
+{% block content_blog %}
+<div class="blog-detail">
+	{% block blog_title %}<h2>{{ post.title }}</h2>{% endblock %}
+	{% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 700x200 crop %}" alt="" /></p>{% endif %}
+	<div class="blog-lead">{{ post.lead_in|safe }}</div>
+	<div class="blog-content">{% render_placeholder post.content language placeholder_language %}</div>
+</div>
 {% endblock %}

@@ -15,7 +15,7 @@ class BlogPlugin(CMSPluginBase):
 
 class LatestEntriesPlugin(BlogPlugin):
 
-    render_template = 'aldryn_blog/latest_entries.html'
+    render_template = 'aldryn_blog/plugins/latest_entries.html'
     name = _('Latest Blog Entries')
     model = models.LatestEntriesPlugin
     form = LatestEntriesForm

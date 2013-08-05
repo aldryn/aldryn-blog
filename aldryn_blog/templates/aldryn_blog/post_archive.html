@@ -1,6 +1,1 @@
-{% extends "aldryn_blog/base.html" %}
-{% load i18n %}
-{% block blog_content %}
-	{% if archive_date %}<h1>{% trans 'Archive' %} &ndash; {% if month %}{{ archive_date|date:'M' }} {% endif %}{{ year }}</h1>{% endif %}
-    {% include "aldryn_blog/snippets/_post_list.html" with posts=latest %}
-{% endblock %}
+{% extends "aldryn_blog/post_list.html" %}
