@@ -49,6 +49,24 @@ class ArchiveView(BasePostView, ArchiveIndexView):
         return super(ArchiveView, self).get_context_data(**kwargs)
 
 
+class AuthorEntriesView(BasePostView, ArchiveIndexView):
+
+    date_field = 'publication_start'
+    allow_empty = True
+    allow_future = True
+
+    def get_queryset(self):
+        qs = BasePostView.get_queryset(self)
+        if 'username' in self.kwargs:
+            qs = qs.filter(author__username=self.kwargs['username'])
+        return qs
+
+    def get_context_data(self, **kwargs):
+        kwargs['author_entries'] = (self.kwargs.get('username')
+                                    if 'username' in self.kwargs else None)
+        return super(AuthorEntriesView, self).get_context_data(**kwargs)
+
+
 class TaggedListView(BasePostView, ListView):
 
     def get_queryset(self):

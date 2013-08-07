@@ -24,4 +24,16 @@ class LatestEntriesPlugin(BlogPlugin):
         context['instance'] = instance
         return context
 
+
+class AuthorEntriesPlugin(BlogPlugin):
+    render_template = 'aldryn_blog/plugins/author_entries.html'
+    name = _('Author Blog Entries')
+    model = models.AuthorEntriesPlugin
+
+    def render(self, context, instance, placeholder):
+        context['instance'] = instance
+        return context
+
+
 plugin_pool.register_plugin(LatestEntriesPlugin)
+plugin_pool.register_plugin(AuthorEntriesPlugin)

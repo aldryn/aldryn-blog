@@ -102,6 +102,23 @@ class LatestEntriesPlugin(CMSPlugin):
         return posts[:self.latest_entries]
 
 
+class AuthorEntriesPlugin(CMSPlugin):
+
+    author = models.ForeignKey(User, verbose_name=_('Author'))
+    latest_entries = models.IntegerField(default=5, help_text=_('The number of author entries to be displayed.'))
+
+    def __unicode__(self):
+        return str(self.latest_entries)
+
+    def copy_relations(self, oldinstance):
+        pass
+
+    def get_posts(self):
+        posts = (Post.published.filter_by_language(self.language)
+                 .filter(author=self.author))
+        return posts[:self.latest_entries]
+
+
 def force_language(sender, instance, **kwargs):
     if issubclass(sender, CMSPlugin) and instance.placeholder and instance.placeholder.slot == 'aldryn_blog_post_content':
         instance.language = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 
-from aldryn_blog.views import ArchiveView, PostDetailView, TaggedListView
+from aldryn_blog.views import (ArchiveView, PostDetailView, TaggedListView,
+                               AuthorEntriesView)
 from aldryn_blog.feeds import LatestEntriesFeed, TagFeed
 
 urlpatterns = patterns(
     '',
     url(r'^$', ArchiveView.as_view(), name='latest-posts'),
+    url(r'^author/(?P<username>[-\w]+)/$', AuthorEntriesView.as_view(), name='author-posts'),
     url(r'^feed/$', LatestEntriesFeed(), name='latest-posts-feed'),
     url(r'^(?P<year>\d{4})/$', ArchiveView.as_view(), name='archive-year'),
     url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', ArchiveView.as_view(), name='archive-month'),

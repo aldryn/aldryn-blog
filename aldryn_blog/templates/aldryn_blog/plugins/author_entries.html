@@ -1,0 +1,5 @@
+{% load i18n %}
+<div class="plugin-blog">
+    <h2>{% trans "Entries by" %} <a href="{% url 'aldryn_blog:author-posts' instance.author.username %}">{{ instance.author }}</a></h2>
+	{% include "aldryn_blog/includes/blog_items.html" with posts=instance.get_posts %}
+</div>
