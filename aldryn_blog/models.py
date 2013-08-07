@@ -12,6 +12,7 @@ from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from taggit.managers import TaggableManager
+from taggit.models import TaggedItem, Tag
 
 from .conf import settings
 
@@ -28,6 +29,26 @@ class RelatedManager(models.Manager):
 
     def filter_by_current_language(self):
         return self.filter_by_language(get_language())
+
+    def get_tags(self, language):
+        """Returns tags used to tag news and its count. Results are ordered by count."""
+
+        # get tagged news
+        entries = self.filter_by_language(language).distinct()
+        kwargs = TaggedItem.bulk_lookup_kwargs(entries)
+
+        # aggregate and sort
+        counted_tags = dict(TaggedItem.objects
+                                      .filter(**kwargs)
+                                      .values('tag')
+                                      .annotate(count=models.Count('tag'))
+                                      .values_list('tag', 'count'))
+
+        # and finally get the results
+        tags = Tag.objects.filter(pk__in=counted_tags.keys())
+        for tag in tags:
+            tag.count = counted_tags[tag.pk]
+        return sorted(tags, key=lambda x: -x.count)
 
 
 class PublishedManager(RelatedManager):

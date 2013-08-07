@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 
+from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
@@ -35,5 +36,17 @@ class AuthorEntriesPlugin(BlogPlugin):
         return context
 
 
+class TagsPlugin(BlogPlugin):
+
+    render_template = 'aldryn_blog/plugins/tags.html'
+    name = _('Tags')
+    model = CMSPlugin
+
+    def render(self, context, instance, placeholder):
+        context['tags'] = models.Post.published.get_tags(
+            language=instance.language)
+        return context
+
 plugin_pool.register_plugin(LatestEntriesPlugin)
 plugin_pool.register_plugin(AuthorEntriesPlugin)
+plugin_pool.register_plugin(TagsPlugin)

@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<div class="plugin-blog">
+	<ul class="blog-tags">
+		{% for tag in tags %}
+		<li><a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="blog-tag-1">{{ tag.name }} ({{ tag.count }})</a></li>
+		{% empty %}
+		<li>{% trans "There are no blog tags." %}</li>
+		{% endfor %}
+	</ul>
+</div>

@@ -24,3 +24,10 @@ class ArchiveNavigation(InclusionTag):
         return context
 
 register.tag('archive_navigation', ArchiveNavigation)
+
+
+@register.filter
+def posts(latest, objects):
+    if latest:
+        return latest
+    return objects
