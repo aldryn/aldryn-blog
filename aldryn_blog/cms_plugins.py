@@ -47,6 +47,20 @@ class TagsPlugin(BlogPlugin):
             language=instance.language)
         return context
 
+
+class ArchivePlugin(BlogPlugin):
+
+    render_template = 'aldryn_blog/plugins/archive.html'
+    name = _('Archive')
+    model = CMSPlugin
+
+    def render(self, context, instance, placeholder):
+        context['dates'] = models.Post.published.get_months(
+            language=instance.language)
+        return context
+
+
 plugin_pool.register_plugin(LatestEntriesPlugin)
 plugin_pool.register_plugin(AuthorEntriesPlugin)
 plugin_pool.register_plugin(TagsPlugin)
+plugin_pool.register_plugin(ArchivePlugin)
