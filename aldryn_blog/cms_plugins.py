@@ -36,7 +36,7 @@ class AuthorEntriesPlugin(BlogPlugin):
         return context
 
 
-class TagsPlugin(BlogPlugin):
+class BlogTagsPlugin(BlogPlugin):
 
     render_template = 'aldryn_blog/plugins/tags.html'
     name = _('Tags')
@@ -48,7 +48,7 @@ class TagsPlugin(BlogPlugin):
         return context
 
 
-class ArchivePlugin(BlogPlugin):
+class BlogArchivePlugin(BlogPlugin):
 
     render_template = 'aldryn_blog/plugins/archive.html'
     name = _('Archive')
@@ -62,5 +62,5 @@ class ArchivePlugin(BlogPlugin):
 
 plugin_pool.register_plugin(LatestEntriesPlugin)
 plugin_pool.register_plugin(AuthorEntriesPlugin)
-plugin_pool.register_plugin(TagsPlugin)
-plugin_pool.register_plugin(ArchivePlugin)
+plugin_pool.register_plugin(BlogTagsPlugin)
+plugin_pool.register_plugin(BlogArchivePlugin)
