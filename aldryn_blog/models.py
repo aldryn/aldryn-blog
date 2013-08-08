@@ -16,6 +16,7 @@ from taggit.managers import TaggableManager
 from taggit.models import TaggedItem, Tag
 
 from .conf import settings
+from .fields import UsersWithPermsManyToManyField
 
 
 class RelatedManager(models.Manager):
@@ -32,9 +33,9 @@ class RelatedManager(models.Manager):
         return self.filter_by_language(get_language())
 
     def get_tags(self, language):
-        """Returns tags used to tag news and its count. Results are ordered by count."""
+        """Returns tags used to tag post and its count. Results are ordered by count."""
 
-        # get tagged news
+        # get tagged post
         entries = self.filter_by_language(language).distinct()
         kwargs = TaggedItem.bulk_lookup_kwargs(entries)
 
@@ -52,7 +53,7 @@ class RelatedManager(models.Manager):
         return sorted(tags, key=lambda x: -x.count)
 
     def get_months(self, language):
-        """Get months with aggregatet count (how much news is in the month). Results are ordered by date."""
+        """Get months with aggregatet count (how much posts is in the month). Results are ordered by date."""
         # done via naive way as django's having tough time while aggregating on date fields
         entries = self.filter_by_language(language)
         dates = entries.values_list('publication_start', flat=True)
@@ -138,18 +139,19 @@ class LatestEntriesPlugin(CMSPlugin):
 
 class AuthorEntriesPlugin(CMSPlugin):
 
-    author = models.ForeignKey(User, verbose_name=_('Author'))
+    authors = UsersWithPermsManyToManyField(perms=['add_post'],
+                                            verbose_name=_('Authors'))
     latest_entries = models.IntegerField(default=5, help_text=_('The number of author entries to be displayed.'))
 
     def __unicode__(self):
         return str(self.latest_entries)
 
     def copy_relations(self, oldinstance):
-        pass
+        self.authors = oldinstance.authors.all()
 
     def get_posts(self):
         posts = (Post.published.filter_by_language(self.language)
-                 .filter(author=self.author))
+                 .filter(author__in=self.authors.all()))
         return posts[:self.latest_entries]
 
 
