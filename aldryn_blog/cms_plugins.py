@@ -30,6 +30,7 @@ class AuthorEntriesPlugin(BlogPlugin):
     render_template = 'aldryn_blog/plugins/author_entries.html'
     name = _('Author Blog Entries')
     model = models.AuthorEntriesPlugin
+    filter_horizontal = ['authors']
 
     def render(self, context, instance, placeholder):
         context['instance'] = instance
