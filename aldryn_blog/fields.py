@@ -14,3 +14,13 @@ class UsersWithPermsManyToManyField(models.ManyToManyField):
         return (models.Q(user_permissions__codename__in=perms)
                 | models.Q(groups__permissions__codename__in=perms)
                 | models.Q(is_superuser=True))
+
+    def formfield(self, **kwargs):
+        db = kwargs.pop('using', None)
+        defaults = {
+            'queryset': (self.rel.to._default_manager.using(db)
+                         .complex_filter(self.rel.limit_choices_to).distinct())
+        }
+        defaults.update(kwargs)
+
+        return super(UsersWithPermsManyToManyField, self).formfield(**defaults)
