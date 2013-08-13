@@ -9,6 +9,7 @@ REQUIREMENTS = [
     'djangocms-text-ckeditor',
     'django-appconf',
     'django-classy-tags',
+    'south>=0.8',
 ]
 
 CLASSIFIERS = [
