@@ -37,6 +37,8 @@ class RelatedManager(models.Manager):
 
         # get tagged post
         entries = self.filter_by_language(language).distinct()
+        if not entries:
+            return []
         kwargs = TaggedItem.bulk_lookup_kwargs(entries)
 
         # aggregate and sort
