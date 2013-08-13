@@ -1,0 +1,24 @@
+{% load i18n thumbnail aldryn_blog_tags %}
+
+<ul class="blog-items">
+	 {% for post in posts %}
+	<li>
+		{% if image and post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 200x100 crop %}" alt="" /></p>{% endif %}
+		<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+		{% block blog_meta %}
+		<p class="blog-meta">
+			<span class="blog-date">{{ post.publication_start|date }}</span>
+			<span class="separator">–</span>
+			<span class="blog-author">{% trans "by" %} <a href="{% url 'aldryn_blog:author-posts' post.author.username %}">{{ post.author|user_name }}</a></span>
+			{% if blog.tags %}
+			<span class="separator">–</span>
+			<span class="blog-tags">{% for tag in post.tags %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+			{% endif %}
+		</p>
+		{% endblock %}
+		<p class="blog-lead">{{ post.lead_in|safe|striptags|truncatewords:"25" }} <a href="{{ post.get_absolute_url }}">{% trans "read more" %}</a></p>
+	</li>
+	{% empty %}
+	<li><p class="blog-empty">{% trans "No entry found." %}</p></li>
+	{% endfor %}
+</ul>
