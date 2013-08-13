@@ -9,6 +9,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from menus.utils import set_language_changer
+from aldryn_blog import request_post_identifier
 
 from aldryn_blog.models import Post
 
@@ -80,7 +81,7 @@ class PostDetailView(BasePostView, DetailView):
         response = super(PostDetailView, self).get(request, *args, **kwargs)
         post = response.context_data.get('post', None)
         if post:
-            request.current_aldryn_blog_entry = post
+            setattr(request, request_post_identifier, post)
             if post.language:
                 set_language_changer(request, post_language_changer)
         return response

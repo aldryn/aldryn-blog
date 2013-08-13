@@ -5,6 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from cms.toolbar_pool import toolbar_pool
 from cms.toolbar_base import CMSToolbar
 
+from aldryn_blog import request_post_identifier
+
 
 @toolbar_pool.register
 class BlogToolbar(CMSToolbar):
@@ -14,9 +16,9 @@ class BlogToolbar(CMSToolbar):
         menu = self.toolbar.get_or_create_menu('blog-app', _('Blog'))
         menu.add_modal_item(_('Add Blog Post'), reverse('admin:aldryn_blog_post_add') + '?_popup',
                             close_on_url=reverse('admin:aldryn_blog_post_changelist'))
-        if hasattr(self.request, 'current_aldryn_blog_entry'):
+
+        blog_entry = getattr(self.request, request_post_identifier, None)
+        if blog_entry and self.request.user.has_perm('aldryn_blog.change_post'):
             menu.add_modal_item(_('Edit Blog Post'), reverse('admin:aldryn_blog_post_change', args=(
-            self.request.current_aldryn_blog_entry.pk,)) + '?_popup',
-                                close_on_url=reverse('admin:aldryn_blog_post_changelist'), active=True)
-        else:
-            menu.add_modal_item(_('Edit Blog Post'), '#', active=False)
+                blog_entry.pk,)) + '?_popup',
+                close_on_url=reverse('admin:aldryn_blog_post_changelist'), active=True)
