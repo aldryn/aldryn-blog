@@ -4,7 +4,7 @@
 {% block content_blog %}
 <div class="blog-detail">
 	{% block blog_title %}<h2>{{ post.title }}</h2>{% endblock %}
-	{% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 700x200 crop %}" alt="" /></p>{% endif %}
+	{% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 620x200 crop %}" alt="" /></p>{% endif %}
 	<div class="blog-lead">{{ post.lead_in|safe }}</div>
 	<div class="blog-content">{% render_placeholder post.content language placeholder_language %}</div>
 </div>
