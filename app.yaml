@@ -11,7 +11,7 @@ installed-apps:
   - filer
   - djangocms_text_ckeditor
   - django_select2
-version: 0.0.19
+version: 0.0.20
 description: Adds blogging abilities to django CMS
 license:
   name: BSD
