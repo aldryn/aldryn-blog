@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-__version__ = '0.0.19'
+__version__ = '0.0.20'
 request_post_identifier = 'current_aldryn_blog_entry'
