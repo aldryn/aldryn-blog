@@ -12,7 +12,7 @@ from aldryn_blog.models import Post
 
 
 class ArchiveNavigation(InclusionTag):
-    template = 'aldryn_blog/snippets/archive_navigation.html'
+    template = 'aldryn_blog/includes/archive_navigation.html'
 
     options = Options(
         Flag('full_navigation', true_values=['full_navigation'], default=False),
