@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-17 10:31+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cms_app.py:8 cms_toolbar.py:16 templates/aldryn_blog/post_list.html:9
+msgid "Blog"
+msgstr ""
+
+#: cms_plugins.py:20
+msgid "Latest Blog Entries"
+msgstr ""
+
+#: cms_plugins.py:31
+msgid "Author Blog Entries"
+msgstr ""
+
+#: cms_plugins.py:43
+msgid "Tags"
+msgstr ""
+
+#: cms_plugins.py:55
+msgid "Archive"
+msgstr ""
+
+#: cms_toolbar.py:17
+msgid "Add Blog Post"
+msgstr ""
+
+#: cms_toolbar.py:22
+msgid "Edit Blog Post"
+msgstr ""
+
+#: feeds.py:16
+#, python-format
+msgid "Blog posts on %(site_name)s"
+msgstr ""
+
+#: models.py:82
+msgid "Title"
+msgstr ""
+
+#: models.py:83
+msgid "Slug"
+msgstr ""
+
+#: models.py:84
+msgid ""
+"Used in the URL. If changed, the URL will change. Clean it to have it re-"
+"created."
+msgstr ""
+
+#: models.py:86
+msgid "language"
+msgstr ""
+
+#: models.py:87
+msgid "leave empty to display in all languages"
+msgstr ""
+
+#: models.py:88
+msgid "Key Visual"
+msgstr ""
+
+#: models.py:89
+msgid "Lead-in"
+msgstr ""
+
+#: models.py:90
+msgid ""
+"Will be displayed in lists, and at the start of the detail page (in bold)"
+msgstr ""
+
+#: models.py:92
+msgid "Author"
+msgstr ""
+
+#: models.py:93
+msgid "Published Since"
+msgstr ""
+
+#: models.py:94
+msgid "Used in the URL. If changed, the URL will change."
+msgstr ""
+
+#: models.py:95
+msgid "Published Until"
+msgstr ""
+
+#: models.py:125
+msgid "The number of latests entries to be displayed."
+msgstr ""
+
+#: models.py:126
+msgid "Show only the blog posts tagged with chosen tags."
+msgstr ""
+
+#: models.py:145
+msgid "Authors"
+msgstr ""
+
+#: models.py:146
+msgid "The number of author entries to be displayed."
+msgstr ""
+
+#: templates/aldryn_blog/post_list.html:7
+msgid "Entries by"
+msgstr ""
+
+#: templates/aldryn_blog/post_list.html:8
+msgid "Blog Archive"
+msgstr ""
+
+#: templates/aldryn_blog/includes/blog_item.html:13
+msgid "by"
+msgstr ""
+
+#: templates/aldryn_blog/includes/blog_item.html:20
+msgid "read more"
+msgstr ""
+
+#: templates/aldryn_blog/includes/blog_item.html:23
+msgid "No entry found."
+msgstr ""
+
+#: templates/aldryn_blog/plugins/tags.html:9
+msgid "There are no blog tags."
+msgstr ""
