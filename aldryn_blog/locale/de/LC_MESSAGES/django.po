@@ -20,124 +20,124 @@ msgstr ""
 
 #: cms_app.py:8 cms_toolbar.py:16 templates/aldryn_blog/post_list.html:9
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: cms_plugins.py:20
 msgid "Latest Blog Entries"
-msgstr ""
+msgstr "Aktuellste Blogeinträge"
 
 #: cms_plugins.py:31
 msgid "Author Blog Entries"
-msgstr ""
+msgstr "Verfasser Blogeinträge"
 
 #: cms_plugins.py:43
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: cms_plugins.py:55
 msgid "Archive"
-msgstr ""
+msgstr "Archiv"
 
 #: cms_toolbar.py:17
 msgid "Add Blog Post"
-msgstr ""
+msgstr "Blogeintrag hinzufügen"
 
 #: cms_toolbar.py:22
 msgid "Edit Blog Post"
-msgstr ""
+msgstr "Blogeintrag bearbeiten"
 
 #: feeds.py:16
 #, python-format
 msgid "Blog posts on %(site_name)s"
-msgstr ""
+msgstr "Blogeinträge auf %(site_name)s"
 
 #: models.py:82
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: models.py:83
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: models.py:84
 msgid ""
 "Used in the URL. If changed, the URL will change. Clean it to have it re-"
 "created."
-msgstr ""
+msgstr "Wird in der URL verwendet. Wenn der Slug geändert wird, ändert sich auch die URL. Bereinigen und es wird neu kreiert. "
 
 #: models.py:86
 msgid "language"
-msgstr ""
+msgstr "Sprache"
 
 #: models.py:87
 msgid "leave empty to display in all languages"
-msgstr ""
+msgstr "Leer lassen um in allen Sprachen anzuzeigen"
 
 #: models.py:88
 msgid "Key Visual"
-msgstr ""
+msgstr "Hauptbild"
 
 #: models.py:89
 msgid "Lead-in"
-msgstr ""
+msgstr "Anriss"
 
 #: models.py:90
 msgid ""
 "Will be displayed in lists, and at the start of the detail page (in bold)"
-msgstr ""
+msgstr "Wird in Listen angezeigt und am Beinn der Detailseite"
 
 #: models.py:92
 msgid "Author"
-msgstr ""
+msgstr "Verfasser"
 
 #: models.py:93
 msgid "Published Since"
-msgstr ""
+msgstr "Veröffentlicht seit"
 
 #: models.py:94
 msgid "Used in the URL. If changed, the URL will change."
-msgstr ""
+msgstr "Wird in der URL verwendet. Wenn verändert, ändert sich auch die URL."
 
 #: models.py:95
 msgid "Published Until"
-msgstr ""
+msgstr "Veröffentlicht bis"
 
 #: models.py:125
 msgid "The number of latests entries to be displayed."
-msgstr ""
+msgstr "Die Anzahl aktuellster Einträge, die angezeigt wird."
 
 #: models.py:126
 msgid "Show only the blog posts tagged with chosen tags."
-msgstr ""
+msgstr "Nur Blogeinträge mit gewählten Tag anzeigen."
 
 #: models.py:145
 msgid "Authors"
-msgstr ""
+msgstr "Verfasser"
 
 #: models.py:146
 msgid "The number of author entries to be displayed."
-msgstr ""
+msgstr "Die Anzahl Verassereinträge die angezeigt wird."
 
 #: templates/aldryn_blog/post_list.html:7
 msgid "Entries by"
-msgstr ""
+msgstr "Einträge von"
 
 #: templates/aldryn_blog/post_list.html:8
 msgid "Blog Archive"
-msgstr ""
+msgstr "Blog Archiv"
 
 #: templates/aldryn_blog/includes/blog_item.html:13
 msgid "by"
-msgstr ""
+msgstr "von"
 
 #: templates/aldryn_blog/includes/blog_item.html:20
 msgid "read more"
-msgstr ""
+msgstr "mehr"
 
 #: templates/aldryn_blog/includes/blog_item.html:23
 msgid "No entry found."
-msgstr ""
+msgstr "Keine Einträge gefunden."
 
 #: templates/aldryn_blog/plugins/tags.html:9
 msgid "There are no blog tags."
-msgstr ""
+msgstr "Keine Blog-Tags vorhanden."
