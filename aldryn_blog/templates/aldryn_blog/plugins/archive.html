@@ -16,6 +16,8 @@
 				{% endfor %}
 			</ul>
 		</li>
+		{% empty %}
+		<li class="blog-empty"><p>{% trans "No entry found." %}</p></li>
 		{% endfor %}
 	</ul>
 	{% endwith %}

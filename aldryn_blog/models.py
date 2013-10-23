@@ -156,6 +156,10 @@ class AuthorEntriesPlugin(CMSPlugin):
                  .filter(author__in=self.authors.all()))
         return posts[:self.latest_entries]
 
+    def get_authors(self):
+        authors = self.authors.all()
+        return authors
+
 
 def force_language(sender, instance, **kwargs):
     if issubclass(sender, CMSPlugin) and instance.placeholder and instance.placeholder.slot == 'aldryn_blog_post_content':

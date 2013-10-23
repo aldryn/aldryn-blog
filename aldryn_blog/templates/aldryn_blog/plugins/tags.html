@@ -4,9 +4,9 @@
 <div class="plugin-blog">
 	<ul class="blog-tags">
 		{% for tag in tags %}
-		<li><a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="blog-tag-1">{{ tag.name }} <span>({{ tag.count }})</span></a></li>
+		<li><a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="blog-tag-{{ tag.count }}">{{ tag.name }} <span>({{ tag.count }})</span></a></li>
 		{% empty %}
-		<li>{% trans "There are no blog tags." %}</li>
+		<li class="blog-empty"><p>{% trans "No entry found." %}</p></li>
 		{% endfor %}
 	</ul>
 </div>
