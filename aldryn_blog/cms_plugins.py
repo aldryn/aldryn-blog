@@ -27,7 +27,7 @@ class LatestEntriesPlugin(BlogPlugin):
 
 
 class AuthorEntriesPlugin(BlogPlugin):
-    render_template = 'aldryn_blog/plugins/author_entries.html'
+    render_template = 'aldryn_blog/plugins/authors.html'
     name = _('Author Blog Entries')
     model = models.AuthorEntriesPlugin
     filter_horizontal = ['authors']
