@@ -20,6 +20,6 @@
 		<p class="blog-lead">{{ post.lead_in|safe|striptags|truncatewords:"25" }} <a href="{{ post.get_absolute_url }}">{% trans "read more" %}</a></p>
 	</li>
 	{% empty %}
-	<li><p class="blog-empty">{% trans "No entry found." %}</p></li>
+	<li class="blog-empty icon-reversed"><p>{% trans "No entry found." %}</p></li>
 	{% endfor %}
 </ul>
