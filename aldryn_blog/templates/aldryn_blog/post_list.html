@@ -3,10 +3,14 @@
 
 {% block content_blog %}
 <div class="blog-list">
-	{% block news_title %}<h2>{% if author_entries %}
-        {% trans "Entries by" %} {{ author_entries }}{% elif archive_date %}
-		{% trans "Blog Archive" %} &ndash; {% if month %}{{ archive_date|date:'M' }} {% endif %}{{ year }}{% else %}
+	{% block news_title %}<h2>
+        {% if author %}{% trans "Entries by" %} {{ author.get_full_name }}{% elif archive_date %}
+		{% trans "Blog Archive" %} &ndash; {% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}{% elif tagged_entries %}
+		{% trans "Blog Tag" %} &ndash; {{ tagged_entries|capfirst }}{% else %}
 		{% trans "Blog" %}{% endif %}</h2>{% endblock %}
     {% include "aldryn_blog/includes/blog_item.html" with posts=latest|posts:object_list %}
+	{% if author or archive_date or tagged_entries %}
+	<p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
+	{% endif %}
 </div>
 {% endblock %}

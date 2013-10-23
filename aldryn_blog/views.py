@@ -7,6 +7,7 @@ from django.utils.translation import override
 from django.views.generic.dates import ArchiveIndexView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.contrib.auth.models import User
 
 from menus.utils import set_language_changer
 from aldryn_blog import request_post_identifier
@@ -59,8 +60,12 @@ class AuthorEntriesView(BasePostView, ListView):
         return qs
 
     def get_context_data(self, **kwargs):
-        kwargs['author_entries'] = (self.kwargs.get('username')
-                                    if 'username' in self.kwargs else None)
+        if 'username' in self.kwargs:
+            try:
+                user = User.objects.get(username=self.kwargs.get('username'))
+            except User.DoesNotExist:
+                user = None
+            kwargs['author'] = user
         return super(AuthorEntriesView, self).get_context_data(**kwargs)
 
 
@@ -69,6 +74,11 @@ class TaggedListView(BasePostView, ListView):
     def get_queryset(self):
         qs = super(TaggedListView, self).get_queryset()
         return qs.filter(tags__slug=self.kwargs['tag'])
+
+    def get_context_data(self, **kwargs):
+        kwargs['tagged_entries'] = (self.kwargs.get('tag')
+                                    if 'tag' in self.kwargs else None)
+        return super(TaggedListView, self).get_context_data(**kwargs)
 
 
 def post_language_changer(language):
