@@ -1,3 +1,5 @@
 <div class="plugin-blog">
-	{% include "aldryn_blog/includes/blog_item.html" with posts=instance.get_posts %}
+	<div class="blog-latest-entries">
+		{% include "aldryn_blog/includes/blog_item.html" with posts=instance.get_posts %}
+	</div>
 </div>
