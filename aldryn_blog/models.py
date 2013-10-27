@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 from django.utils.translation import get_language, ugettext_lazy as _, override
 
 from cms.models.fields import PlaceholderField
@@ -71,7 +72,7 @@ class PublishedManager(RelatedManager):
 
     def get_query_set(self):
         qs = super(PublishedManager, self).get_query_set()
-        now = datetime.datetime.now()
+        now = timezone.now()
         qs = qs.filter(publication_start__lte=now)
         qs = qs.filter(models.Q(publication_end__isnull=True) | models.Q(publication_end__gte=now))
         return qs
@@ -90,7 +91,7 @@ class Post(models.Model):
                         help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'))
     content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
     author = models.ForeignKey(User, verbose_name=_('Author'))
-    publication_start = models.DateTimeField(_('Published Since'), default=datetime.datetime.now,
+    publication_start = models.DateTimeField(_('Published Since'), default=timezone.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
     publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
 
