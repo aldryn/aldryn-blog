@@ -1,12 +1,12 @@
 {% extends "aldryn_blog/base.html" %}
-{% load i18n placeholder_tags thumbnail %}
+{% load i18n thumbnail cms_tags %}
 {% load url from future %}
 
 {% block content_blog %}
 <div class="blog-detail">
-	{% block blog_title %}<h2>{{ post.title }}</h2>{% endblock %}
+	{% block blog_title %}<h2>{% show_editable_model post "title" %}</h2>{% endblock %}
 	{% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 660x200 crop %}" alt="" /></p>{% endif %}
-	<div class="blog-lead">{{ post.lead_in|safe }}</div>
+	<div class="blog-lead">{% show_editable_model post "lead_in" "lead_in" "" safe %}</div>
 	<div class="blog-content">{% render_placeholder post.content language placeholder_language %}</div>
 	<p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
 </div>

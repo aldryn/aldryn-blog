@@ -1,5 +1,5 @@
 {% extends "aldryn_blog/base.html" %}
-{% load i18n aldryn_blog_tags %}
+{% load i18n thumbnail aldryn_blog_tags %}
 
 {% block content_blog %}
 <div class="blog-list">
@@ -8,7 +8,7 @@
 		{% trans "Blog Archive" %} &ndash; {% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}{% elif tagged_entries %}
 		{% trans "Blog Tag" %} &ndash; {{ tagged_entries|capfirst }}{% else %}
 		{% trans "Blog" %}{% endif %}</h2>{% endblock %}
-	{% include "aldryn_blog/includes/blog_items.html" with posts=latest|posts:object_list %}
+	{% include "aldryn_blog/includes/blog_items.html" with posts=latest|posts:object_list image="true" %}
 	{% if author or archive_date or tagged_entries %}
 	<p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
 	{% endif %}

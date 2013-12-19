@@ -1,11 +1,11 @@
-{% load i18n thumbnail aldryn_blog_tags %}
+{% load i18n thumbnail cms_tags aldryn_blog_tags %}
 {% load url from future %}
 
 <ul class="blog-items">
 	{% for post in posts %}
 	<li>
-		{% if image and post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 200x100 crop %}" alt="" /></p>{% endif %}
-		<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+		{% if image and post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 60x60 crop %}" alt="" /></p>{% endif %}
+		<h3><a href="{{ post.get_absolute_url }}">{% show_editable_model post "title" %}</a></h3>
 		{% block blog_meta %}
 		<p class="blog-meta">
 			<span class="blog-date">{{ post.publication_start|date }}</span>
@@ -15,7 +15,7 @@
 			{% endif %}
 		</p>
 		{% endblock %}
-		<div class="blog-lead">{{ post.lead_in|safe }}</div>
+		<div class="blog-lead">{% show_editable_model post "lead_in" "lead_in" "" safe %}</div>
 		<p class="blog-more"><a href="{{ post.get_absolute_url }}">{% trans "read more" %}</a></p>
 	</li>
 	{% empty %}
