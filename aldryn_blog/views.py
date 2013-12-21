@@ -83,7 +83,10 @@ class TaggedListView(BasePostView, ListView):
 
 def post_language_changer(language):
     with override(language):
-        return reverse('aldryn_blog:latest-posts', )
+        try:
+            return reverse('aldryn_blog:latest-posts', )
+        except:
+            return '/%s/' % language
 
 
 class PostDetailView(BasePostView, DetailView):
@@ -97,5 +100,5 @@ class PostDetailView(BasePostView, DetailView):
         return response
 
     def get_context_data(self, **kwargs):
-        kwargs['placeholder_language'] = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE
+        kwargs['placeholder_language'] = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE or settings.LANGUAGES[0][0]
         return super(PostDetailView, self).get_context_data(**kwargs)
