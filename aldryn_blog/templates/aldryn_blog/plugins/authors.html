@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="addon addon-blog">
+<div class="plugin plugin-blog">
 	<ul class="blog-authors">
 		{% for author in instance.get_authors %}
 		<li><a href="{% url 'aldryn_blog:author-posts' author.username %}">{{ author.get_full_name }} <span>{% if author.count %}{{ author.count }}{% else %}0{% endif %} articles</span></a></li>

@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load url from future %}
 
-<div class="addon addon-blog">
+<div class="plugin plugin-blog">
 	<ul class="blog-tags">
 		{% for tag in tags %}
 		<li><a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="blog-tag-{{ tag.count }}">{{ tag.name }} <span>({{ tag.count }})</span></a></li>

@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load url from future %}
 
-<div class="addon addon-blog">
+<div class="plugin plugin-blog">
 	{% regroup dates by date.year as years %}
 	{% with current_year=year current_month=month %}
 	<ul class="blog-archive">
