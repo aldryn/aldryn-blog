@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
@@ -23,6 +25,9 @@ class LatestEntriesFeed(Feed):
 
     def item_description(self, item):
         return item.lead_in
+
+    def item_pubdate(self, item):
+        return datetime.datetime.combine(item.publication_start, datetime.time())
 
 
 class TagFeed(LatestEntriesFeed):
