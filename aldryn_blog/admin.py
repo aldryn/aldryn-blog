@@ -20,7 +20,7 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
     date_hierarchy = 'publication_start'
     raw_id_fields = ['author']
     form = PostForm
-    frontend_editable_fields = ("title", "lead_in")
+    frontend_editable_fields = ('title', 'lead_in')
 
     _fieldsets = [
         (None, {
