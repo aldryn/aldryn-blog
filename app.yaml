@@ -1,4 +1,4 @@
-name: Blog
+name: Aldryn Blog
 package-name: aldryn-blog
 url: https://github.com/aldryn/aldryn-blog
 author:
@@ -11,7 +11,7 @@ installed-apps:
   - filer
   - djangocms_text_ckeditor
   - django_select2
-version: 0.1.0
+version: 0.1.0.a
 description: Adds blogging abilities to django CMS
 license:
   name: BSD
