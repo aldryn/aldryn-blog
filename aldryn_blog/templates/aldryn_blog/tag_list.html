@@ -1,0 +1,16 @@
+{% extends "aldryn_blog/base.html" %}
+{% load i18n thumbnail aldryn_blog_tags %}
+{% load url from future %}
+
+{% block content_blog %}
+<div class="blog-list">
+	{% block blog_title %}<h2>{% trans "Blog Tags" %}</h2>{% endblock %}
+	<ul class="blog-tags">
+		{% for tag in object_list %}
+		<li><a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="blog-tag-{{ tag.count }}">{{ tag.name }} <span>({{ tag.count }})</span></a></li>
+		{% empty %}
+		<li class="blog-empty"><p>{% trans "No entry found." %}</p></li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

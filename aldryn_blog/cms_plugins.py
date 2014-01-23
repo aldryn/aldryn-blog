@@ -26,10 +26,10 @@ class LatestEntriesPlugin(BlogPlugin):
         return context
 
 
-class AuthorEntriesPlugin(BlogPlugin):
+class AuthorsPlugin(BlogPlugin):
     render_template = 'aldryn_blog/plugins/authors.html'
-    name = _('Author Blog Entries')
-    model = models.AuthorEntriesPlugin
+    name = _('Blog Authors')
+    model = models.AuthorsPlugin
     filter_horizontal = ['authors']
 
     def render(self, context, instance, placeholder):
@@ -62,6 +62,6 @@ class BlogArchivePlugin(BlogPlugin):
 
 
 plugin_pool.register_plugin(LatestEntriesPlugin)
-plugin_pool.register_plugin(AuthorEntriesPlugin)
+plugin_pool.register_plugin(AuthorsPlugin)
 plugin_pool.register_plugin(BlogTagsPlugin)
 plugin_pool.register_plugin(BlogArchivePlugin)

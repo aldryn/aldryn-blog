@@ -5,6 +5,7 @@ from collections import Counter
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import get_language, ugettext_lazy as _, override
@@ -17,7 +18,6 @@ from taggit.managers import TaggableManager
 from taggit.models import TaggedItem, Tag
 
 from .conf import settings
-from .fields import UsersWithPermsManyToManyField
 
 
 class RelatedManager(models.Manager):
@@ -28,7 +28,7 @@ class RelatedManager(models.Manager):
 
     def filter_by_language(self, language):
         qs = self.get_query_set()
-        return qs.filter(models.Q(language__isnull=True) | models.Q(language=language))
+        return qs.filter(Q(language__isnull=True) | Q(language=language))
 
     def filter_by_current_language(self):
         return self.filter_by_language(get_language())
@@ -74,7 +74,7 @@ class PublishedManager(RelatedManager):
         qs = super(PublishedManager, self).get_query_set()
         now = timezone.now()
         qs = qs.filter(publication_start__lte=now)
-        qs = qs.filter(models.Q(publication_end__isnull=True) | models.Q(publication_end__gte=now))
+        qs = qs.filter(Q(publication_end__isnull=True) | Q(publication_end__gte=now))
         return qs
 
 
@@ -140,25 +140,14 @@ class LatestEntriesPlugin(CMSPlugin):
         return posts[:self.latest_entries]
 
 
-class AuthorEntriesPlugin(CMSPlugin):
-
-    authors = UsersWithPermsManyToManyField(perms=['add_post'],
-                                            verbose_name=_('Authors'))
-    latest_entries = models.IntegerField(default=5, help_text=_('The number of author entries to be displayed.'))
-
-    def __unicode__(self):
-        return str(self.latest_entries)
-
-    def copy_relations(self, oldinstance):
-        self.authors = oldinstance.authors.all()
-
-    def get_posts(self):
-        posts = (Post.published.filter_by_language(self.language)
-                 .filter(author__in=self.authors.all()))
-        return posts[:self.latest_entries]
-
+class AuthorsPlugin(CMSPlugin):
     def get_authors(self):
-        authors = self.authors.all()
+        now = timezone.now()
+        authors = User.objects.filter(
+            (Q(post__publication_end__isnull=True) | Q(post__publication_end__gte=now))
+            & (Q(post__language=self.language) | Q(post__language__isnull=True))
+            & Q(post__publication_start__lte=now)
+        ).distinct()
         return authors
 
 

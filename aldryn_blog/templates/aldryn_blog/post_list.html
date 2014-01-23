@@ -5,7 +5,7 @@
 <div class="blog-list">
 	{% block blog_title %}<h2>
 		{% if author %}{% trans "Entries by" %} {{ author.get_full_name }}{% elif archive_date %}
-		{% trans "Blog Archive" %} &ndash; {% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}{% elif tagged_entries %}
+		{% trans "Blog Archive" %} &ndash; {% if day %}{{ archive_date|date:'d' }}. {% endif %}{% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}{% elif tagged_entries %}
 		{% trans "Blog Tag" %} &ndash; {{ tagged_entries|capfirst }}{% else %}
 		{% trans "Blog" %}{% endif %}</h2>{% endblock %}
 	{% include "aldryn_blog/includes/blog_items.html" with posts=latest|posts:object_list image="true" %}
