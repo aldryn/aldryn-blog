@@ -1,0 +1,23 @@
+{
+	"name": "Blog",
+	"description": "Adds blogging abilities to django CMS",
+	"version": "0.3.2",
+	"url": "https://github.com/aldryn/aldryn-blog",
+	"package-name": "aldryn-blog",
+	"installed-apps": [
+		"taggit",
+		"aldryn_blog",
+		"easy_thumbnails",
+		"filer",
+		"djangocms_text_ckeditor",
+		"django_select2"
+	],
+	"author": {
+		"name": "Divio AG",
+		"url": "https://www.divio.ch"
+	},
+	"license": {
+		"name": "BSD",
+		"text": "!literal-include LICENSE.txt"
+	}
+}
