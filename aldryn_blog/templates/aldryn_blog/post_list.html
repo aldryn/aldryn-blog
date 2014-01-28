@@ -1,6 +1,26 @@
 {% extends "aldryn_blog/base.html" %}
 {% load i18n thumbnail aldryn_blog_tags %}
 
+{% block blog_breadcrumb %}
+	<li><span class="separator">&raquo;</span></li>
+	{% if author %}
+		<li><span>{{ author.get_full_name }}</span></li>
+	{% elif archive_date %}
+		{% if year and month and day %}
+			<li><a href="{% url 'aldryn_blog:archive-year' year=year %}">{{ year }}</a> <span class="separator">&raquo;</span></li>
+			<li><a href="{% url 'aldryn_blog:archive-month' year=year month=month %}">{{ month }}</a> <span class="separator">&raquo;</span></li>
+			<li><span>{{ day }}</span></li>
+		{% elif year and month %}
+			<li><a href="{% url 'aldryn_blog:archive-year' year=year %}">{{ year }}</a> <span class="separator">&raquo;</span></li>
+			<li><span>{{ month }}</span></li>
+		{% elif year %}
+			<li><span>{{ year }}</span></li>
+		{% endif %}
+	{% elif tagged_entries %}
+			<li><span>{{ tagged_entries|capfirst }}</span></li>
+	{% endif %}
+{% endblock blog_breadcrumb %}
+
 {% block content_blog %}
 <div class="blog-list">
 	{% block blog_title %}<h2>
