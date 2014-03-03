@@ -13,8 +13,9 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 from menus.utils import set_language_changer
-from aldryn_blog import request_post_identifier
+from aldryn_common.paginator import DiggPaginator, paginate_by
 
+from aldryn_blog import request_post_identifier
 from aldryn_blog.models import Post
 
 
@@ -49,12 +50,19 @@ class ArchiveView(BasePostView, ArchiveIndexView):
         return qs
 
     def get_context_data(self, **kwargs):
+        try:
+            page = self.kwargs['page']
+        except KeyError:
+            page = 1
+
         kwargs['day'] = int(self.kwargs.get('day')) if 'day' in self.kwargs else None
         kwargs['month'] = int(self.kwargs.get('month')) if 'month' in self.kwargs else None
         kwargs['year'] = int(self.kwargs.get('year')) if 'year' in self.kwargs else None
         if kwargs['year']:
             kwargs['archive_date'] = datetime.date(
                 kwargs['year'], kwargs['month'] or 1, kwargs['day'] or 1)
+        kwargs['page'] = DiggPaginator(kwargs['object_list'], paginate_by(), body=6, padding=2).page(page)
+        kwargs['object_list'] = kwargs['page'].object_list
         return super(ArchiveView, self).get_context_data(**kwargs)
 
 

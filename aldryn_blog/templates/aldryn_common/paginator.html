@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if page.has_previous %}<a href="{% url 'aldryn_blog:latest-posts-paginated' page=page.previous_page_number %}">{% trans "Previous" %}</a>{% endif %}
+{% for num in page.page_range %}  
+    {% if not num %}
+    ...
+    {% else %}
+    <a href="{% url 'aldryn_blog:latest-posts-paginated' page=num %}">{{ num }}</a>
+    {% endif %}
+{% endfor %}
+{% if page.has_next %}<a href="{% url 'aldryn_blog:latest-posts-paginated' page=page.next_page_number %}">{% trans "Next" %}</a>{% endif %}

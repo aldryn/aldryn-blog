@@ -9,6 +9,7 @@ from aldryn_blog.feeds import LatestEntriesFeed, TagFeed
 urlpatterns = patterns(
     '',
     url(r'^$', ArchiveView.as_view(), name='latest-posts'),
+    url(r'^(?P<page>\d+)/$', ArchiveView.as_view(), name='latest-posts-paginated'),
     url(r'^author/$', AuthorsListView.as_view(), name='author-list'),
     url(r'^author/(?P<username>[\w.@+-]+)/$', AuthorEntriesView.as_view(), name='author-posts'),
     url(r'^feed/$', LatestEntriesFeed(), name='latest-posts-feed'),

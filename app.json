@@ -10,7 +10,8 @@
 		"easy_thumbnails",
 		"filer",
 		"djangocms_text_ckeditor",
-		"django_select2"
+		"django_select2",
+		"aldryn_common"
 	],
 	"author": {
 		"name": "Divio AG",
