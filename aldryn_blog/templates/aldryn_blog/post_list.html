@@ -29,6 +29,7 @@
 		{% trans "Blog Tag" %} &ndash; {{ tagged_entries|capfirst }}{% else %}
 		{% trans "Blog" %}{% endif %}</h2>{% endblock %}
 	{% include "aldryn_blog/includes/blog_items.html" with posts=latest|posts:object_list image="true" %}
+	{% include "aldryn_common/paginator.html" %}
 	{% if author or archive_date or tagged_entries %}
 	<p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
 	{% endif %}
