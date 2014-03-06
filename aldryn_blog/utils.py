@@ -50,9 +50,14 @@ def generate_slugs(users):
 
 def get_user_from_slug(find_slug):
     authors = generate_slugs(get_blog_authors())
-    return [author for author in authors if author.slug == find_slug or [None]][0]
+    for author in authors:
+        if author.slug == find_slug:
+            return author
+    return None
 
 
 def get_slug_for_user(find_user):
     authors = generate_slugs(get_blog_authors())
-    return [author.slug for author in authors if author == find_user or [None]][0]
+    for author in authors:
+        if author == find_user:
+            return author.slug
