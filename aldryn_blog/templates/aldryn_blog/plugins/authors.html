@@ -2,7 +2,7 @@
 <div class="plugin plugin-blog">
 	<ul class="blog-authors">
 		{% for author in instance.get_authors %}
-		<li><a href="{% url 'aldryn_blog:author-posts' author.username %}">{{ author.get_full_name }} <span>{{ author.post_set.count }} articles</span></a></li>
+		<li><a href="{% url 'aldryn_blog:author-posts' author.slug %}">{{ author.get_full_name }} <span>{{ author.post_set.count }} articles</span></a></li>
 		{% empty %}
 		<li class="blog-empty"><p>{% trans "No entry found." %}</p></li>
 		{% endfor %}

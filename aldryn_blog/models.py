@@ -18,6 +18,7 @@ from taggit.managers import TaggableManager
 from taggit.models import TaggedItem, Tag
 
 from .conf import settings
+from .utils import generate_slugs, get_blog_authors, get_slug_for_user
 
 
 class RelatedManager(models.Manager):
@@ -120,6 +121,9 @@ class Post(models.Model):
             self.slug = slugify(self.title)
         return super(Post, self).save(**kwargs)
 
+    def get_author_slug(self):
+        return get_slug_for_user(self.author)
+
 
 class LatestEntriesPlugin(CMSPlugin):
 
@@ -142,13 +146,7 @@ class LatestEntriesPlugin(CMSPlugin):
 
 class AuthorsPlugin(CMSPlugin):
     def get_authors(self):
-        now = timezone.now()
-        authors = User.objects.filter(
-            (Q(post__publication_end__isnull=True) | Q(post__publication_end__gte=now))
-            & (Q(post__language=self.language) | Q(post__language__isnull=True))
-            & Q(post__publication_start__lte=now)
-        ).distinct()
-        return authors
+        return generate_slugs(get_blog_authors())
 
 
 def force_language(sender, instance, **kwargs):

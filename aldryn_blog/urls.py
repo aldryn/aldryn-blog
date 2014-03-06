@@ -10,7 +10,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', ArchiveView.as_view(), name='latest-posts'),
     url(r'^author/$', AuthorsListView.as_view(), name='author-list'),
-    url(r'^author/(?P<username>[\w.@+-]+)/$', AuthorEntriesView.as_view(), name='author-posts'),
+    url(r'^author/(?P<slug>[\w.@+-]+)/$', AuthorEntriesView.as_view(), name='author-posts'),
     url(r'^feed/$', LatestEntriesFeed(), name='latest-posts-feed'),
     url(r'^(?P<year>\d{4})/$', ArchiveView.as_view(), name='archive-year'),
     url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$', ArchiveView.as_view(), name='archive-month'),
