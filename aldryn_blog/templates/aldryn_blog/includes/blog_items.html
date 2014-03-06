@@ -9,7 +9,7 @@
 		{% block blog_meta %}
 		<p class="blog-meta">
 			<span class="blog-date">{{ post.publication_start|date }}</span>
-			<span class="blog-author">{% trans "by" %} <a href="{% url 'aldryn_blog:author-posts' post.get_author_slug %}">{{ post.author|user_name }}</a></span>
+			<span class="blog-author">{% trans "by" %} {{ post.author|user_name }}</span>
 			{% if post.tags and false %}
 			<span class="blog-tags">{% for tag in post.tags %}<a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
 			{% endif %}

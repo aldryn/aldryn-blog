@@ -122,6 +122,7 @@ class Post(models.Model):
         return super(Post, self).save(**kwargs)
 
     def get_author_slug(self):
+        # FIXME: This is a potential performance hogger
         return get_slug_for_user(self.author)
 
 
