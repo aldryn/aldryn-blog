@@ -3,20 +3,19 @@ import datetime
 
 from django.conf import settings
 from django.core.urlresolvers import reverse, resolve
-from django.db.models import Q
 from django.utils.translation import override, get_language
 from django.views import generic
 from django.views.generic.dates import ArchiveIndexView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
-from django.utils import timezone
 
 from menus.utils import set_language_changer
 from aldryn_common.paginator import DiggPaginator, paginate_by
 
 from aldryn_blog import request_post_identifier
-from aldryn_blog.models import Post
+from .models import Post
+from .utils import generate_slugs, get_user_from_slug, get_blog_authors, get_slug_for_user
 
 
 class BasePostView(object):
@@ -66,12 +65,7 @@ class AuthorsListView(generic.ListView):
     template_name = 'aldryn_blog/author_list.html'
 
     def get_queryset(self):
-        now = timezone.now()
-        authors = User.objects.filter(
-            (Q(post__publication_end__isnull=True) | Q(post__publication_end__gte=now))
-            & (Q(post__language=get_language()) | Q(post__language__isnull=True))
-            & Q(post__publication_start__lte=now)
-        ).distinct()
+        authors = generate_slugs(get_blog_authors())
         return authors
 
 
@@ -79,14 +73,14 @@ class AuthorEntriesView(BasePostView, ListView):
 
     def get_queryset(self):
         qs = BasePostView.get_queryset(self)
-        if 'username' in self.kwargs:
-            qs = qs.filter(author__username=self.kwargs['username'])
+        if 'slug' in self.kwargs:
+            qs = qs.filter(author__username=get_user_from_slug(self.kwargs['slug']))
         return qs
 
     def get_context_data(self, **kwargs):
-        if 'username' in self.kwargs:
+        if 'slug' in self.kwargs:
             try:
-                user = User.objects.get(username=self.kwargs.get('username'))
+                user = get_slug_for_user(User.objects.get(username=self.kwargs.get('slug')))
             except User.DoesNotExist:
                 user = None
             kwargs['author'] = user
