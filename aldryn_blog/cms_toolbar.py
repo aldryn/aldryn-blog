@@ -18,5 +18,5 @@ class BlogToolbar(CMSToolbar):
 
         blog_entry = getattr(self.request, request_post_identifier, None)
         if blog_entry and self.request.user.has_perm('aldryn_blog.change_post'):
-            menu.add_modal_item(_('Edit Blog Post'), reverse('admin:aldryn_blog_post_change', args=(
-                blog_entry.pk,)), active=True)
+            menu.add_modal_item(_('Edit Blog Post'), reverse('admin:aldryn_blog_post_change', args=(blog_entry.pk,)),
+                                active=True)
