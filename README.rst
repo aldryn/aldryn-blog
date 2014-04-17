@@ -11,7 +11,7 @@ Simple blogging application. It allows you to:
 Installation
 ============
 
-Aldryn Platrofm Users
+Aldryn Platform Users
 ---------------------
 
 Choose a site you want to install the add-on to from the dashboard. Then go to ``Apps -> Install app`` and click ``Install`` next to ``Blog`` app.
