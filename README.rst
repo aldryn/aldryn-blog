@@ -18,8 +18,10 @@ Choose a site you want to install the add-on to from the dashboard. Then go to `
 
 Redeploy the site.
 
-Manuall Installation
---------------------
+Manual Installation
+-------------------
+
+**NOTE: At this time, the ``Latest Blog Entries`` CMSPlugin, and possibly other portions do not work with SQLite3 databases and requires that Time Zone Support is added to MySQL Installations. No special considerations are required, however, for Postgress DB instalations.**
 
 Run ``pip install aldryn-blog``.
 
@@ -50,7 +52,9 @@ Now redeploy/restart the site again.
 The above CMS site has become a blog post archive view.
 
 
-Available Plug-ins
-==================
+Available CMS Plug-ins
+======================
 
-``Latest Blog Entries`` plugin lets you list **n** most frequent blog entries filtered by tags.
+* ``Latest Blog Entries`` plugin lets you list **n** most frequent blog entries filtered by tags.
+* ``Blog Authors`` plugin lists blog authors and the number of posts they have authored.
+* ``Tags`` plugin lists the tags applied to all posts and allows filtering by these tags.
