@@ -63,12 +63,12 @@ The Lead-In is text/html only and is intended to be a brief "teaser" or introduc
 
 To add the body of the blog post, the CMS operator will:
 
-1. navigate to the blog post view (**not** the list view),
-2. Click the "Live" button in the CMS toolbar to go into edit-mode,
-3. Click the "structure" button to enter the structre sub-mode,
-4. Here the operator will see the placeholder "ALDRYN_BLOG_POST_CONTENT", use the menu on the far right of the placeholder to add whatever content the operator wishes –– this will often be the Text plugin,
-5. Double-click the new Text plugin (or whatever) to add the desired content,
-6. Save changes on the plugin UI,
+1. Navigate to the blog post view (*not* the list view);
+2. Click the "Live" button in the CMS toolbar to go into edit-mode;
+3. Click the "Structure" button to enter the structure sub-mode;
+4. Here the operator will see the placeholder "ALDRYN_BLOG_POST_CONTENT", use the menu on the far right of the placeholder to add whatever CMS plugin the operator wishes –– this will often be the Text plugin;
+5. Double-click the new Text plugin (or whatever was selected) to add the desired content;
+6. Save changes on the plugin's UI;
 7. Press the "Publish" button in the CMS Toolbar.
 
 
