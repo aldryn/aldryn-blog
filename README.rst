@@ -51,6 +51,26 @@ Now redeploy/restart the site again.
 
 The above CMS site has become a blog post archive view.
 
+About the Content of a Post
+---------------------------
+
+In Aldryn Blog, there are two content fields in each Post which may be confusing:
+
+1. Lead-In and
+2. Body
+
+The Lead-In is text/html only and is intended to be a brief "teaser" or introduction into the blog post. The lead-in is shown in the blog list-views and is presented as the first paragraph (or so) of the blog post itself. **It is not intended to be the whole blog post.**
+
+To add the body of the blog post, the CMS operator will:
+
+1. navigate to the blog post view (**not** the list view),
+2. Click the "Live" button in the CMS toolbar to go into edit-mode,
+3. Click the "structure" button to enter the structre sub-mode,
+4. Here the operator will see the placeholder "ALDRYN_BLOG_POST_CONTENT", use the menu on the far right of the placeholder to add whatever content the operator wishes –– this will often be the Text plugin,
+5. Double-click the new Text plugin (or whatever) to add the desired content,
+6. Save changes on the plugin UI,
+7. Press the "Publish" button in the CMS Toolbar.
+
 
 Available CMS Plug-ins
 ======================
