@@ -4,7 +4,8 @@ import datetime
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
+from django.db.models import Q
+from django.utils.translation import ugettext as _, get_language
 
 from aldryn_blog.models import Post
 
@@ -18,7 +19,9 @@ class LatestEntriesFeed(Feed):
         return _('Blog posts on %(site_name)s') % {'site_name': Site.objects.get_current().name}
 
     def items(self, obj):
-        return Post.published.order_by('-publication_start')[:10]
+        return Post.published.filter(
+            Q(language=get_language()) | Q(language__isnull=True)
+        ).order_by('-publication_start')[:10]
 
     def item_title(self, item):
         return item.title
