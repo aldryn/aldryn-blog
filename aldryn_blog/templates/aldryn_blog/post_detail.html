@@ -4,10 +4,10 @@
 
 {% block content_blog %}
 <div class="blog-detail">
-	{% block blog_title %}<h2>{% render_model post "title" %}</h2>{% endblock %}
-	{% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 660x200 crop subject_location=post.key_visual.subject_location %}" alt="" /></p>{% endif %}
-	<div class="blog-lead">{% render_model post "lead_in" "lead_in" "" safe %}</div>
-	<div class="blog-content">{% render_placeholder post.content language placeholder_language %}</div>
-	<p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
+    {% block blog_title %}<h2>{% render_model post "title" %}</h2>{% endblock %}
+    {% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 660x200 crop subject_location=post.key_visual.subject_location %}" alt="" /></p>{% endif %}
+    <div class="blog-lead">{% render_model post "lead_in" "lead_in" "" safe %}</div>
+    <div class="blog-content">{% render_placeholder post.content language placeholder_language %}</div>
+    <p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
 </div>
 {% endblock %}

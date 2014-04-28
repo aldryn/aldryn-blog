@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block extend_breadcrumb %}
-	{{ block.super }}
-	{% block blog_breadcrumb %}
-	{% endblock blog_breadcrumb %}
+    {{ block.super }}
+    {% block blog_breadcrumb %}
+    {% endblock blog_breadcrumb %}
 {% endblock extend_breadcrumb%}
 
 {% block content %}
 <div class="app app-blog">
-	{% block content_blog %}{% endblock %}
+    {% block content_blog %}{% endblock %}
 </div>
 {% endblock %}
