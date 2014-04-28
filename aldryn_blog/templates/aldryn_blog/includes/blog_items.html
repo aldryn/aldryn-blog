@@ -4,7 +4,7 @@
 <ul class="blog-items">
 	{% for post in posts %}
 	<li>
-		{% if image and post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 60x60 crop %}" alt="" /></p>{% endif %}
+		{% if image and post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 60x60 crop subject_location=post.key_visual.subject_location %}" alt="" /></p>{% endif %}
 		<h3><a href="{{ post.get_absolute_url }}">{% render_model post "title" %}</a></h3>
 		{% block blog_meta %}
 		<p class="blog-meta">
