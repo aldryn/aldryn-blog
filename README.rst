@@ -21,7 +21,16 @@ Redeploy the site.
 Manual Installation
 -------------------
 
-**NOTE: At this time, the ``Latest Blog Entries`` CMSPlugin, and possibly other portions do not work with SQLite3 databases and requires that Time Zone Support is added to MySQL Installations. No special considerations are required, however, for Postgress DB instalations.**
+**NOTE**: If you are using a database other than PostgresSQL, check out the table below.
+
+Database support:
+
++---------------+----------------------------+-----------------+
+| SQLite3       | MySQL                      | PostgresSQL     |
++===============+============================+=================+
+| Not supported | Requires Time zone support | Fully supported |
++---------------+----------------------------+-----------------+
+
 
 Run ``pip install aldryn-blog``.
 
