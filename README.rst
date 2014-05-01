@@ -18,8 +18,10 @@ Choose a site you want to install the add-on to from the dashboard. Then go to `
 
 Redeploy the site.
 
-Manuall Installation
---------------------
+Manual Installation
+-------------------
+
+**NOTE: At this time, the ``Latest Blog Entries`` CMSPlugin, and possibly other portions do not work with SQLite3 databases and requires that Time Zone Support is added to MySQL Installations. No special considerations are required, however, for Postgress DB instalations.**
 
 Run ``pip install aldryn-blog``.
 
@@ -49,8 +51,30 @@ Now redeploy/restart the site again.
 
 The above CMS site has become a blog post archive view.
 
+About the Content of a Post
+---------------------------
 
-Available Plug-ins
-==================
+In Aldryn Blog, there are two content fields in each Post which may be confusing:
 
-``Latest Blog Entries`` plugin lets you list **n** most frequent blog entries filtered by tags.
+1. Lead-In and
+2. Body
+
+The Lead-In is text/html only and is intended to be a brief "teaser" or introduction into the blog post. The lead-in is shown in the blog list-views and is presented as the first paragraph (or so) of the blog post itself. **It is not intended to be the whole blog post.**
+
+To add the body of the blog post, the CMS operator will:
+
+1. Navigate to the blog post view (*not* the list view);
+2. Click the "Live" button in the CMS toolbar to go into edit-mode;
+3. Click the "Structure" button to enter the structure sub-mode;
+4. Here the operator will see the placeholder "ALDRYN_BLOG_POST_CONTENT", use the menu on the far right of the placeholder to add whatever CMS plugin the operator wishes –– this will often be the Text plugin;
+5. Double-click the new Text plugin (or whatever was selected) to add the desired content;
+6. Save changes on the plugin's UI;
+7. Press the "Publish" button in the CMS Toolbar.
+
+
+Available CMS Plug-ins
+======================
+
+* ``Latest Blog Entries`` plugin lets you list **n** most frequent blog entries filtered by tags.
+* ``Blog Authors`` plugin lists blog authors and the number of posts they have authored.
+* ``Tags`` plugin lists the tags applied to all posts and allows filtering by these tags.
