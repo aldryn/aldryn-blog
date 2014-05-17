@@ -21,6 +21,9 @@ from .conf import settings
 from .utils import generate_slugs, get_blog_authors, get_slug_for_user
 
 
+AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
+
 class RelatedManager(models.Manager):
 
     def get_query_set(self):
@@ -91,7 +94,7 @@ class Post(models.Model):
     lead_in = HTMLField(_('Lead-in'),
                         help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'))
     content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
-    author = models.ForeignKey(User, verbose_name=_('Author'))
+    author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'))
     publication_start = models.DateTimeField(_('Published Since'), default=timezone.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
     publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
