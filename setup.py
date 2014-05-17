@@ -11,6 +11,7 @@ REQUIREMENTS = [
     'django-classy-tags',
     'south>=0.8',
     'aldryn_common',
+    'aldryn-search>=0.1.9',
 ]
 
 CLASSIFIERS = [

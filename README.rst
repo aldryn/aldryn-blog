@@ -46,6 +46,9 @@ Add below apps to ``INSTALLED_APPS``: ::
         'easy_thumbnails',
         'filer',
         'taggit',
+        # for search
+        'aldryn_search',
+        'haystack',
         …
     ]
 
@@ -87,3 +90,11 @@ Available CMS Plug-ins
 * ``Latest Blog Entries`` plugin lets you list **n** most frequent blog entries filtered by tags.
 * ``Blog Authors`` plugin lists blog authors and the number of posts they have authored.
 * ``Tags`` plugin lists the tags applied to all posts and allows filtering by these tags.
+
+
+Search
+======
+
+By default, the blog posts are searchable using ``django-haystack``.
+
+You can turn it this behavior off by setting ``ALDRYN_BLOG_SEARCH = False`` in your django settings.
