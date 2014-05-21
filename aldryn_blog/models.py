@@ -8,7 +8,6 @@ from django.db import models
 from django.db.models import Q
 from django.template.defaultfilters import slugify
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import get_language, ugettext_lazy as _, override
 
 from cms.models.fields import PlaceholderField
@@ -129,7 +128,7 @@ class Post(models.Model):
         # FIXME: This is a potential performance hogger
         return get_slug_for_user(self.author)
 
-@python_2_unicode_compatible
+
 class LatestEntriesPlugin(CMSPlugin):
 
     latest_entries = models.IntegerField(default=5, help_text=_('The number of latests entries to be displayed.'))
