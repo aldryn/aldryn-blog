@@ -135,7 +135,10 @@ class LatestEntriesPlugin(CMSPlugin):
     tags = models.ManyToManyField('taggit.Tag', blank=True, help_text=_('Show only the blog posts tagged with chosen tags.'))
 
     def __unicode__(self):
-        return str(self.latest_entries)
+        """
+        must return a unicode string
+        """
+        return str(self.latest_entries).decode('utf8')
 
     def copy_relations(self, oldinstance):
         self.tags = oldinstance.tags.all()
