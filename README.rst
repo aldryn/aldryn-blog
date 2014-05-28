@@ -95,6 +95,7 @@ Available CMS Plug-ins
 Search
 ======
 
-By default, the blog posts are searchable using ``django-haystack``.
+If you want the blog posts to be searchable, be sure to install ``aldryn-search`` and its dependencies.
+Your posts will be searchable using ``django-haystack``.
 
 You can turn it this behavior off by setting ``ALDRYN_BLOG_SEARCH = False`` in your django settings.

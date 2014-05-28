@@ -11,8 +11,7 @@
 		"filer",
 		"djangocms_text_ckeditor",
 		"django_select2",
-		"aldryn_common",
-		"aldryn-search"
+		"aldryn_common"
 	],
 	"author": {
 		"name": "Divio AG",
