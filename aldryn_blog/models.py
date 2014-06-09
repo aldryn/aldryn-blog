@@ -37,11 +37,14 @@ class RelatedManager(models.Manager):
     def filter_by_current_language(self):
         return self.filter_by_language(get_language())
 
-    def get_tags(self, language):
+    def get_tags(self, language=None):
         """Returns tags used to tag post and its count. Results are ordered by count."""
 
         # get tagged post
-        entries = self.filter_by_language(language).distinct()
+        entries = self
+        if language:
+            entries = entries.filter_by_language(language)
+        entries = entries.distinct()
         if not entries:
             return []
         kwargs = TaggedItem.bulk_lookup_kwargs(entries)
