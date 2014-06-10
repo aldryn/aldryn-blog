@@ -105,3 +105,4 @@ Additional Settings
 ===================
 
 * ``ALDRYN_BLOG_SHOW_ALL_LANGUAGES``: By default, only the blog posts in the current language will be displayed. By setting the value of this option to ``True``, you can change the behaviour to display all posts from all languages instead.
+* ``ALDRYN_BLOG_USE_RAW_ID_FIELDS``: Enable raw ID fields in admin (default = False)

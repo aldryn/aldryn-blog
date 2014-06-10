@@ -18,7 +18,6 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
     render_placeholder_language_tabs = False
     list_display = ['title', 'author', 'publication_start', 'publication_end']
     date_hierarchy = 'publication_start'
-    raw_id_fields = ['author']
     form = PostForm
     frontend_editable_fields = ('title', 'lead_in')
 
@@ -34,6 +33,8 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
             'fields': ['content']
         }),
     ]
+
+    raw_id_fields = ['author'] if getattr(settings, 'ALDRYN_BLOG_USE_RAW_ID_FIELDS', False) else []
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = copy.deepcopy(self._fieldsets)
