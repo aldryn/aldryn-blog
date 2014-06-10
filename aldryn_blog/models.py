@@ -82,11 +82,7 @@ class RelatedManager(models.Manager):
         Returns all categories used in posts and the amount, ordered by amount.
         """
 
-        entries = self
-        if language:
-            entries = entries.filter_by_language(language)
-
-        entries = entries.distinct()
+        entries = (self.filter_by_language(language) if language else self).distinct()
         if not entries:
             return []
 

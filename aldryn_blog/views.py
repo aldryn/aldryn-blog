@@ -98,10 +98,10 @@ class CategoryListView(generic.ListView):
         return Post.published.get_categories(get_language())
 
 
-class CategoryPostsListView(BasePostView, ListView):
+class CategoryPostListView(BasePostView, ListView):
 
     def get_queryset(self):
-        qs = super(CategoryPostsListView, self).get_queryset()
+        qs = super(CategoryPostListView, self).get_queryset()
         return qs.filter(category__slug=self.kwargs['category'])
 
 
