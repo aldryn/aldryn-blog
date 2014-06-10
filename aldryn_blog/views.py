@@ -25,6 +25,10 @@ class BasePostView(object):
             manager = Post.objects
         else:
             manager = Post.published
+
+        if getattr(settings, 'ALDRYN_BLOG_SHOW_ALL_LANGUAGES', False):
+            return manager
+
         return manager.filter_by_current_language()
 
     def render_to_response(self, context, **response_kwargs):

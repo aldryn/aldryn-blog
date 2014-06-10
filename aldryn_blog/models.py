@@ -114,7 +114,7 @@ class Post(models.Model):
                   'month': self.publication_start.month,
                   'day': self.publication_start.day,
                   'slug': self.slug}
-        if self.language:
+        if self.language and not getattr(settings, 'ALDRYN_BLOG_SHOW_ALL_LANGUAGES', False):
             with override(self.language):
                 return reverse('aldryn_blog:post-detail', kwargs=kwargs)
         return reverse('aldryn_blog:post-detail', kwargs=kwargs)

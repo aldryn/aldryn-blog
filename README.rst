@@ -99,3 +99,9 @@ If you want the blog posts to be searchable, be sure to install ``aldryn-search`
 Your posts will be searchable using ``django-haystack``.
 
 You can turn it this behavior off by setting ``ALDRYN_BLOG_SEARCH = False`` in your django settings.
+
+
+Additional Settings
+===================
+
+* ``ALDRYN_BLOG_SHOW_ALL_LANGUAGES``: By default, only the blog posts in the current language will be displayed. By setting the value of this option to ``True``, you can change the behaviour to display all posts from all languages instead.
