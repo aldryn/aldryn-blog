@@ -24,6 +24,21 @@ from .utils import generate_slugs, get_blog_authors, get_slug_for_user
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
+class Category(models.Model):
+    name = models.CharField(_('Name'), max_length=255)
+    slug = models.CharField(_('Slug'), max_length=255, unique=True, blank=True,
+                            help_text=_('Used in the URL. If changed, the URL will change. '
+                                        'Clean it to have it re-created.'))
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super(Category, self).save(**kwargs)
+
+
 class RelatedManager(models.Manager):
 
     def get_query_set(self):
@@ -61,6 +76,21 @@ class RelatedManager(models.Manager):
         for tag in tags:
             tag.count = counted_tags[tag.pk]
         return sorted(tags, key=lambda x: -x.count)
+
+    def get_categories(self, language=None):
+        """
+        Returns all categories used in posts and the amount, ordered by amount.
+        """
+
+        entries = self
+        if language:
+            entries = entries.filter_by_language(language)
+
+        entries = entries.distinct()
+        if not entries:
+            return []
+
+        return Category.objects.filter(post__in=entries).annotate(count=models.Count('post')).order_by('-count')
 
     def get_months(self, language):
         """Get months with aggregatet count (how much posts is in the month). Results are ordered by date."""
@@ -101,6 +131,7 @@ class Post(models.Model):
     publication_start = models.DateTimeField(_('Published Since'), default=timezone.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
     publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
+    category = models.ForeignKey(Category, verbose_name=_('Category'), null=True, blank=True)
 
     objects = RelatedManager()
     published = PublishedManager()

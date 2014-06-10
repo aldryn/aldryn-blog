@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 
 from aldryn_blog.forms import PostForm
-from aldryn_blog.models import Post
+from aldryn_blog.models import Post, Category
 
 import cms
 from cms.admin.placeholderadmin import PlaceholderAdmin
@@ -27,7 +27,7 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
             'fields': ['title', 'slug', 'publication_start', 'publication_end', 'author', 'language']
         }),
         (None, {
-            'fields': ['key_visual', 'lead_in', 'tags']
+            'fields': ['key_visual', 'lead_in', 'category', 'tags']
         }),
         ('Content', {
             'classes': ['plugin-holder', 'plugin-holder-nopage'],
@@ -60,3 +60,9 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
         return super(PostAdmin, self).add_view(request, *args, **kwargs)
 
 admin.site.register(Post, PostAdmin)
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+
+admin.site.register(Category, CategoryAdmin)

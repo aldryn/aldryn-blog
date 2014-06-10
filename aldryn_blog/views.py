@@ -14,7 +14,7 @@ from menus.utils import set_language_changer
 from aldryn_common.paginator import DiggPaginator, paginate_by
 
 from aldryn_blog import request_post_identifier
-from .models import Post
+from .models import Post, Category
 from .utils import generate_slugs, get_user_from_slug, get_blog_authors, get_slug_for_user
 
 
@@ -89,6 +89,20 @@ class AuthorEntriesView(BasePostView, ListView):
                 user = None
             kwargs['author'] = user
         return super(AuthorEntriesView, self).get_context_data(**kwargs)
+
+
+class CategoryListView(generic.ListView):
+    template_name = 'aldryn_blog/category_list.html'
+
+    def get_queryset(self):
+        return Post.published.get_categories(get_language())
+
+
+class CategoryPostsListView(BasePostView, ListView):
+
+    def get_queryset(self):
+        qs = super(CategoryPostsListView, self).get_queryset()
+        return qs.filter(category__slug=self.kwargs['category'])
 
 
 class TagsListView(generic.ListView):
