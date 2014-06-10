@@ -98,6 +98,8 @@ class Post(models.Model):
                         help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'))
     content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
     author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'))
+    coauthors = models.ManyToManyField(
+        to=AUTH_USER_MODEL, verbose_name=_('Co-Authors'), null=True, blank=True, related_name='aldryn_blog_coauthors')
     publication_start = models.DateTimeField(_('Published Since'), default=timezone.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
     publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
