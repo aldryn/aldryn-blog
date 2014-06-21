@@ -123,7 +123,7 @@ class RelatedManager(models.Manager):
 
         entries = (self.filter_by_language(language) if language else self).distinct()
         if not entries:
-            return []
+            return Category.objects.none()
 
         return Category.objects.filter(post__in=entries).annotate(count=models.Count('post')).order_by('-count')
 

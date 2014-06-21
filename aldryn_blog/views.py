@@ -4,7 +4,7 @@ import datetime
 from django.conf import settings
 from django.core.urlresolvers import reverse, resolve
 from django.shortcuts import get_object_or_404
-from django.utils.translation import override, get_language
+from django.utils.translation import override, get_language_from_request
 from django.views import generic
 from django.views.generic.dates import ArchiveIndexView
 from django.views.generic.detail import DetailView
@@ -96,7 +96,8 @@ class CategoryListView(generic.ListView):
     template_name = 'aldryn_blog/category_list.html'
 
     def get_queryset(self):
-        return Post.published.get_categories(get_language())
+        language = get_language_from_request(self.request, check_path=True)
+        return Post.published.get_categories(language)
 
 
 class CategoryPostListView(BasePostView, ListView):
@@ -119,7 +120,8 @@ class TagsListView(generic.ListView):
     template_name = 'aldryn_blog/tag_list.html'
 
     def get_queryset(self):
-        return Post.published.get_tags(get_language())
+        language = get_language_from_request(self.request, check_path=True)
+        return Post.published.get_tags(language)
 
 
 class TaggedListView(BasePostView, ListView):
