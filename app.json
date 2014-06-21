@@ -12,7 +12,7 @@
 		"djangocms_text_ckeditor",
 		"django_select2",
 		"aldryn_common",
-        "hvad"
+		"hvad"
 	],
 	"author": {
 		"name": "Divio AG",

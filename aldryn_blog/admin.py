@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 import copy
+from distutils.version import LooseVersion
 
 from django.conf import settings
 from django.contrib import admin
 
-from aldryn_blog.forms import PostForm
-from aldryn_blog.models import Post, Category
-
 import cms
-from cms.admin.placeholderadmin import PlaceholderAdmin
-from cms.admin.placeholderadmin import FrontendEditableAdmin
-from distutils.version import LooseVersion
+from cms.admin.placeholderadmin import PlaceholderAdmin, FrontendEditableAdmin
 from hvad.admin import TranslatableAdmin
-from .forms import CategoryForm
+
+from .forms import PostForm, CategoryForm
+from .models import Post, Category
+
 
 class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
 
