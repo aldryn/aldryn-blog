@@ -2,41 +2,80 @@
 import datetime
 from collections import Counter
 
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.db.models import Q
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import get_language, ugettext_lazy as _, override
 
+from cms.utils.i18n import get_current_language
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
+from hvad.models import TranslationManager, TranslatableModel, TranslatedFields
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItem, Tag
 
 from .conf import settings
-from .utils import generate_slugs, get_blog_authors, get_slug_for_user
+from .utils import generate_slugs, get_blog_authors, get_slug_for_user, get_slug_in_language
 
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
-class Category(models.Model):
-    name = models.CharField(_('Name'), max_length=255)
-    slug = models.CharField(_('Slug'), max_length=255, unique=True, blank=True,
-                            help_text=_('Used in the URL. If changed, the URL will change. '
-                                        'Clean it to have it re-created.'))
+class CategoryManager(TranslationManager):
+
+    def get_with_usage_count(self, language=None, news_ids=None, **kwargs):
+        if not news_ids:
+            news_ids = self.language(language).values_list('pk', flat=True)
+
+        kwargs['news__in'] = news_ids
+
+        categories = list(self.language(language).filter(**kwargs).distinct())
+
+        # No annotate in hvad.
+        for category in categories:
+            category.news_count = category.news_set.count()
+        return sorted(categories, key=lambda x: -x.news_count)
+
+
+class Category(TranslatableModel):
+
+    translations = TranslatedFields(
+        name=models.CharField(_('Name'), max_length=255),
+        slug=models.SlugField(_('Slug'), max_length=255, blank=True,
+                              help_text=_('Auto-generated. Clean it to have it re-created. '
+                                          'WARNING! Used in the URL. If changed, the URL will change. ')),
+        meta={'unique_together': [['slug', 'language_code']]}
+    )
+
+    ordering = models.IntegerField(_('Ordering'), default=0)
+
+    objects = CategoryManager()
+
+    class Meta:
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
+        ordering = ['ordering']
 
     def __unicode__(self):
-        return self.name
+        return self.lazy_translation_getter('name', str(self.pk))
 
-    def save(self, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super(Category, self).save(**kwargs)
+    def get_absolute_url(self, language=None):
+        language = language or get_current_language()
+        slug = get_slug_in_language(self, language)
+        with override(language):
+            if slug:
+                return reverse('aldryn_blog:category-posts', kwargs={'category': slug})
+
+            # category not translated in given language
+            try:
+                return reverse('aldryn_blog:latest-posts')
+            except (ImproperlyConfigured, NoReverseMatch):
+                return '/%s' % language
 
 
 class RelatedManager(models.Manager):

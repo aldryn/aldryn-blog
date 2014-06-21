@@ -11,10 +11,25 @@ class Migration(SchemaMigration):
         # Adding model 'Category'
         db.create_table(u'aldryn_blog_category', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('slug', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255, blank=True)),
+            ('ordering', self.gf('django.db.models.fields.IntegerField')(default=0)),
         ))
         db.send_create_signal(u'aldryn_blog', ['Category'])
+
+        # Adding model 'CategoryTranslation'
+        db.create_table(u'aldryn_blog_category_translation', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=255, blank=True)),
+            ('language_code', self.gf('django.db.models.fields.CharField')(max_length=15, db_index=True)),
+            ('master', self.gf('django.db.models.fields.related.ForeignKey')(related_name='translations', null=True, to=orm['aldryn_blog.Category'])),
+        ))
+        db.send_create_signal(u'aldryn_blog', ['CategoryTranslation'])
+
+        # Adding unique constraint on 'CategoryTranslation', fields ['slug', 'language_code']
+        db.create_unique(u'aldryn_blog_category_translation', ['slug', 'language_code'])
+
+        # Adding unique constraint on 'CategoryTranslation', fields ['language_code', 'master']
+        db.create_unique(u'aldryn_blog_category_translation', ['language_code', 'master_id'])
 
         # Adding field 'Post.category'
         db.add_column(u'aldryn_blog_post', 'category',
@@ -23,8 +38,17 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
+        # Removing unique constraint on 'CategoryTranslation', fields ['language_code', 'master']
+        db.delete_unique(u'aldryn_blog_category_translation', ['language_code', 'master_id'])
+
+        # Removing unique constraint on 'CategoryTranslation', fields ['slug', 'language_code']
+        db.delete_unique(u'aldryn_blog_category_translation', ['slug', 'language_code'])
+
         # Deleting model 'Category'
         db.delete_table(u'aldryn_blog_category')
+
+        # Deleting model 'CategoryTranslation'
+        db.delete_table(u'aldryn_blog_category_translation')
 
         # Deleting field 'Post.category'
         db.delete_column(u'aldryn_blog_post', 'category_id')
@@ -36,10 +60,17 @@ class Migration(SchemaMigration):
             u'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'aldryn_blog.category': {
-            'Meta': {'object_name': 'Category'},
+            'Meta': {'ordering': "['ordering']", 'object_name': 'Category'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'ordering': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
+        u'aldryn_blog.categorytranslation': {
+            'Meta': {'unique_together': "[['slug', 'language_code'], ('language_code', 'master')]", 'object_name': 'CategoryTranslation', 'db_table': "u'aldryn_blog_category_translation'"},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language_code': ('django.db.models.fields.CharField', [], {'max_length': '15', 'db_index': 'True'}),
+            'master': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'translations'", 'null': 'True', 'to': u"orm['aldryn_blog.Category']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'slug': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'blank': 'True'})
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255', 'blank': 'True'})
         },
         u'aldryn_blog.latestentriesplugin': {
             'Meta': {'object_name': 'LatestEntriesPlugin', '_ormbases': ['cms.CMSPlugin']},

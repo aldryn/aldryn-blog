@@ -11,6 +11,8 @@ REQUIREMENTS = [
     'django-classy-tags',
     'south>=0.8',
     'aldryn_common',
+    'django-hvad',
+    'unidecode',
 ]
 
 CLASSIFIERS = [

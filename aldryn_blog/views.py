@@ -3,6 +3,7 @@ import datetime
 
 from django.conf import settings
 from django.core.urlresolvers import reverse, resolve
+from django.shortcuts import get_object_or_404
 from django.utils.translation import override, get_language
 from django.views import generic
 from django.views.generic.dates import ArchiveIndexView
@@ -100,9 +101,18 @@ class CategoryListView(generic.ListView):
 
 class CategoryPostListView(BasePostView, ListView):
 
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        response = super(CategoryPostListView, self).get(*args, **kwargs)
+        set_language_changer(self.request, self.object.get_absolute_url)
+        return response
+
+    def get_object(self):
+        return get_object_or_404(Category.objects.language(), slug=self.kwargs['category'])
+
     def get_queryset(self):
         qs = super(CategoryPostListView, self).get_queryset()
-        return qs.filter(category__slug=self.kwargs['category'])
+        return qs.filter(category=self.object)
 
 
 class TagsListView(generic.ListView):

@@ -11,7 +11,8 @@ import cms
 from cms.admin.placeholderadmin import PlaceholderAdmin
 from cms.admin.placeholderadmin import FrontendEditableAdmin
 from distutils.version import LooseVersion
-
+from hvad.admin import TranslatableAdmin
+from .forms import CategoryForm
 
 class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
 
@@ -62,7 +63,16 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
 admin.site.register(Post, PostAdmin)
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug']
+class CategoryAdmin(TranslatableAdmin):
+
+    form = CategoryForm
+    list_display = ['__unicode__', 'all_translations', 'ordering']
+    list_editable = ['ordering']
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = [
+            (None, {'fields': ['name', 'slug']}),
+        ]
+        return fieldsets
 
 admin.site.register(Category, CategoryAdmin)
