@@ -28,18 +28,13 @@ AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 class CategoryManager(TranslationManager):
 
-    def get_with_usage_count(self, language=None, news_ids=None, **kwargs):
-        if not news_ids:
-            news_ids = self.language(language).values_list('pk', flat=True)
-
-        kwargs['news__in'] = news_ids
-
+    def get_with_usage_count(self, language=None, **kwargs):
         categories = list(self.language(language).filter(**kwargs).distinct())
 
-        # No annotate in hvad.
+        # No annotate in hvad
         for category in categories:
-            category.news_count = category.news_set.count()
-        return sorted(categories, key=lambda x: -x.news_count)
+            category.post_count = category.post_set.count()
+        return sorted(categories, key=lambda x: -x.post_count)
 
 
 class Category(TranslatableModel):
