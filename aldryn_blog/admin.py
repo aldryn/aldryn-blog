@@ -23,7 +23,7 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
 
     _fieldsets = [
         (None, {
-            'fields': ['title', 'slug', 'publication_start', 'publication_end', 'author', 'language']
+            'fields': ['title', 'slug', 'publication_start', 'publication_end', 'author', 'coauthors', 'language']
         }),
         (None, {
             'fields': ['key_visual', 'lead_in', 'category', 'tags']
@@ -34,7 +34,8 @@ class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
         }),
     ]
 
-    raw_id_fields = ['author'] if getattr(settings, 'ALDRYN_BLOG_USE_RAW_ID_FIELDS', False) else []
+    raw_id_fields = ['author', 'coauthors'] if getattr(settings, 'ALDRYN_BLOG_USE_RAW_ID_FIELDS', False) else []
+    filter_horizontal = ['coauthors']
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = copy.deepcopy(self._fieldsets)
