@@ -1,11 +1,18 @@
 {% extends "aldryn_blog/base.html" %}
-{% load i18n thumbnail cms_tags %}
+{% load i18n thumbnail cms_tags aldryn_blog_tags %}
 {% load url from future %}
 
 {% block content_blog %}
 <div class="blog-detail">
     {% block blog_title %}<h2>{% render_model post "title" %}</h2>{% endblock %}
     {% if post.key_visual_id %}<p class="blog-visual"><img src="{% thumbnail post.key_visual 660x200 crop subject_location=post.key_visual.subject_location %}" alt="" /></p>{% endif %}
+    <span class="blog-author">
+        {% trans "by" %} {{ post.author|user_name }}{% if post.coauthors.exists %},
+            {% for coauthor in post.coauthors.all %}
+                {{ coauthor|user_name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        {% endif %}
+    </span>
     <div class="blog-lead">{% render_model post "lead_in" "lead_in" "" safe %}</div>
     <div class="blog-content">{% render_placeholder post.content language placeholder_language %}</div>
     <p class="blog-back"><a href="{% url 'aldryn_blog:latest-posts' %}">{% trans "Back" %}</a></p>
