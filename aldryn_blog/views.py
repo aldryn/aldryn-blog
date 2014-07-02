@@ -3,7 +3,8 @@ import datetime
 
 from django.conf import settings
 from django.core.urlresolvers import reverse, resolve
-from django.utils.translation import override, get_language
+from django.shortcuts import get_object_or_404
+from django.utils.translation import override, get_language_from_request
 from django.views import generic
 from django.views.generic.dates import ArchiveIndexView
 from django.views.generic.detail import DetailView
@@ -14,7 +15,7 @@ from menus.utils import set_language_changer
 from aldryn_common.paginator import DiggPaginator, paginate_by
 
 from aldryn_blog import request_post_identifier
-from .models import Post
+from .models import Post, Category
 from .utils import generate_slugs, get_user_from_slug, get_blog_authors, get_slug_for_user
 
 
@@ -91,11 +92,36 @@ class AuthorEntriesView(BasePostView, ListView):
         return super(AuthorEntriesView, self).get_context_data(**kwargs)
 
 
+class CategoryListView(generic.ListView):
+    template_name = 'aldryn_blog/category_list.html'
+
+    def get_queryset(self):
+        language = get_language_from_request(self.request, check_path=True)
+        return Post.published.get_categories(language)
+
+
+class CategoryPostListView(BasePostView, ListView):
+
+    def get(self, *args, **kwargs):
+        self.object = self.get_object()
+        response = super(CategoryPostListView, self).get(*args, **kwargs)
+        set_language_changer(self.request, self.object.get_absolute_url)
+        return response
+
+    def get_object(self):
+        return get_object_or_404(Category.objects.language(), slug=self.kwargs['category'])
+
+    def get_queryset(self):
+        qs = super(CategoryPostListView, self).get_queryset()
+        return qs.filter(category=self.object)
+
+
 class TagsListView(generic.ListView):
     template_name = 'aldryn_blog/tag_list.html'
 
     def get_queryset(self):
-        return Post.published.get_tags(get_language())
+        language = get_language_from_request(self.request, check_path=True)
+        return Post.published.get_tags(language)
 
 
 class TaggedListView(BasePostView, ListView):

@@ -40,3 +40,12 @@ class TagFeed(LatestEntriesFeed):
 
     def items(self, obj):
         return Post.published.filter(tags__slug=obj)[:10]
+
+
+class CategoryFeed(LatestEntriesFeed):
+
+    def get_object(self, request, category):
+        return category
+
+    def items(self, obj):
+        return Post.published.filter(category__slug=obj)[:10]

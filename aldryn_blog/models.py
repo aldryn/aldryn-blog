@@ -2,26 +2,75 @@
 import datetime
 from collections import Counter
 
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.db.models import Q
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import get_language, ugettext_lazy as _, override
 
+from cms.utils.i18n import get_current_language
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
 from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
+from hvad.models import TranslationManager, TranslatableModel, TranslatedFields
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItem, Tag
 
 from .conf import settings
-from .utils import generate_slugs, get_blog_authors, get_slug_for_user
+from .utils import generate_slugs, get_blog_authors, get_slug_for_user, get_slug_in_language
 
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
+
+class CategoryManager(TranslationManager):
+
+    def get_with_usage_count(self, language=None, **kwargs):
+        categories = list(self.language(language).filter(**kwargs).distinct())
+
+        # No annotate in hvad
+        for category in categories:
+            category.post_count = category.post_set.count()
+        return sorted(categories, key=lambda x: -x.post_count)
+
+
+class Category(TranslatableModel):
+
+    translations = TranslatedFields(
+        name=models.CharField(_('Name'), max_length=255),
+        slug=models.SlugField(_('Slug'), max_length=255, blank=True,
+                              help_text=_('Auto-generated. Clean it to have it re-created. '
+                                          'WARNING! Used in the URL. If changed, the URL will change. ')),
+        meta={'unique_together': [['slug', 'language_code']]}
+    )
+
+    ordering = models.IntegerField(_('Ordering'), default=0)
+
+    objects = CategoryManager()
+
+    class Meta:
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
+        ordering = ['ordering']
+
+    def __unicode__(self):
+        return self.lazy_translation_getter('name', str(self.pk))
+
+    def get_absolute_url(self, language=None):
+        language = language or get_current_language()
+        slug = get_slug_in_language(self, language)
+        with override(language):
+            if slug:
+                return reverse('aldryn_blog:category-posts', kwargs={'category': slug})
+
+            # category not translated in given language
+            try:
+                return reverse('aldryn_blog:latest-posts')
+            except (ImproperlyConfigured, NoReverseMatch):
+                return '/%s' % language
 
 
 class RelatedManager(models.Manager):
@@ -62,6 +111,17 @@ class RelatedManager(models.Manager):
             tag.count = counted_tags[tag.pk]
         return sorted(tags, key=lambda x: -x.count)
 
+    def get_categories(self, language=None):
+        """
+        Returns all categories used in posts and the amount, ordered by amount.
+        """
+
+        entries = (self.filter_by_language(language) if language else self).distinct()
+        if not entries:
+            return Category.objects.none()
+
+        return Category.objects.filter(post__in=entries).annotate(count=models.Count('post')).order_by('-count')
+
     def get_months(self, language):
         """Get months with aggregatet count (how much posts is in the month). Results are ordered by date."""
         # done via naive way as django's having tough time while aggregating on date fields
@@ -101,6 +161,7 @@ class Post(models.Model):
     publication_start = models.DateTimeField(_('Published Since'), default=timezone.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
     publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
+    category = models.ForeignKey(Category, verbose_name=_('Category'), null=True, blank=True)
 
     objects = RelatedManager()
     published = PublishedManager()

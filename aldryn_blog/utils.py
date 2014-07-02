@@ -1,8 +1,11 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import get_language
+
+from hvad.utils import get_translation
 
 from .conf import settings
 
@@ -76,3 +79,17 @@ def get_slug_for_user(find_user):
     for author in authors:
         if author == find_user:
             return author.slug
+
+
+def get_slug_in_language(record, language):
+    if not record:
+        return None
+    if hasattr(record, record._meta.translations_cache) and language == record.language_code:  # possibly no need to hit db, try cache
+        return record.lazy_translation_getter('slug')
+    else:  # hit db
+        try:
+            translation = get_translation(record, language_code=language)
+        except ObjectDoesNotExist:
+            return None
+        else:
+            return translation.slug
