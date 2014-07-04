@@ -23,13 +23,25 @@ def get_blog_languages():
     return langs
 
 
-def get_blog_authors():
+def get_blog_authors(coauthors=True):
     now = timezone.now()
-    return User.objects.filter(
+
+    filters = (
         (Q(post__publication_end__isnull=True) | Q(post__publication_end__gte=now))
         & (Q(post__language=get_language()) | Q(post__language__isnull=True))
         & Q(post__publication_start__lte=now)
-    ).distinct()
+    )
+
+    if coauthors:
+        coauthors_filters = (
+            (Q(aldryn_blog_coauthors__publication_end__isnull=True) | Q(aldryn_blog_coauthors__publication_end__gte=now))
+            & (Q(aldryn_blog_coauthors__language=get_language()) | Q(aldryn_blog_coauthors__language__isnull=True))
+            & Q(aldryn_blog_coauthors__publication_start__lte=now)
+        )
+
+        filters = (filters | coauthors_filters)
+
+    return User.objects.filter(filters).distinct()
 
 
 def generate_slugs(users):
