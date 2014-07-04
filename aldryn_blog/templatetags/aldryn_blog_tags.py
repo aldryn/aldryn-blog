@@ -78,7 +78,7 @@ def get_related_posts(post, by_categories=True, by_tags=True, by_latest=True, wa
         else:
             qs = all_posts
 
-        posts_by_tags = list(qs.filter(tags__in=given_tags))
+        posts_by_tags = list(qs.filter(tags__in=given_tags).exclude(id__in=[p.id for p in found]))
 
         if posts_by_tags:
             if append:
@@ -92,6 +92,6 @@ def get_related_posts(post, by_categories=True, by_tags=True, by_latest=True, wa
     if by_latest:
         if not found:
             found = []
-        return found + list(all_posts[:wanted_count - len(found)])
+        return found + list(all_posts.exclude(id__in=[p.id for p in found])[:wanted_count - len(found)])
 
     return found
