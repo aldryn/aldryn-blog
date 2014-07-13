@@ -7,20 +7,10 @@ from django.utils.translation import get_language
 
 from hvad.utils import get_translation
 
-from .conf import settings
-
 
 def get_blog_languages():
     from .models import Post
-
-    langs = []
-    for post in Post.objects.all():
-        if not post.language:
-            # at least one post is available in all languages
-            return settings.languages
-        if post.language not in langs:
-            langs.append(post.language)
-    return langs
+    return Post.objects.exclude(language__isnull=True).order_by('language').values_list('language', flat=True).distinct()
 
 
 def get_blog_authors(coauthors=True):
