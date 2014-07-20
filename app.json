@@ -1,7 +1,6 @@
 {
 	"name": "Blog",
 	"description": "Adds blogging abilities to django CMS",
-	"version": "0.4.2",
 	"url": "https://github.com/aldryn/aldryn-blog",
 	"package-name": "aldryn-blog",
 	"installed-apps": [
