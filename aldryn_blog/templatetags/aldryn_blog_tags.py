@@ -92,6 +92,8 @@ def get_related_posts(post, by_categories=True, by_tags=True, by_latest=True, wa
     if by_latest:
         if not found:
             found = []
-        return found + list(all_posts.exclude(id__in=[p.id for p in found])[:wanted_count - len(found)])
 
-    return found
+        amount = wanted_count - len(found) if len(found) <= wanted_count else 0
+        return found[:wanted_count - amount] + list(all_posts.exclude(id__in=[p.id for p in found])[:amount])
+
+    return found[:wanted_count]
