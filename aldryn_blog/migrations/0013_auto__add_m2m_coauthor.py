@@ -28,6 +28,19 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'AuthorsPlugin', '_ormbases': ['cms.CMSPlugin']},
             u'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'})
         },
+        u'aldryn_blog.category': {
+            'Meta': {'ordering': "['ordering']", 'object_name': 'Category'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'ordering': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
+        u'aldryn_blog.categorytranslation': {
+            'Meta': {'unique_together': "[['slug', 'language_code'], ('language_code', 'master')]", 'object_name': 'CategoryTranslation', 'db_table': "u'aldryn_blog_category_translation'"},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language_code': ('django.db.models.fields.CharField', [], {'max_length': '15', 'db_index': 'True'}),
+            'master': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'translations'", 'null': 'True', 'to': u"orm['aldryn_blog.Category']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255', 'blank': 'True'})
+        },
         u'aldryn_blog.latestentriesplugin': {
             'Meta': {'object_name': 'LatestEntriesPlugin', '_ormbases': ['cms.CMSPlugin']},
             u'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
@@ -37,6 +50,7 @@ class Migration(SchemaMigration):
         u'aldryn_blog.post': {
             'Meta': {'ordering': "['-publication_start']", 'object_name': 'Post'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
+            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['aldryn_blog.Category']", 'null': 'True', 'blank': 'True'}),
             'coauthors': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'aldryn_blog_coauthors'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"}),
             'content': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'aldryn_blog_posts'", 'null': 'True', 'to': "orm['cms.Placeholder']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
