@@ -13,6 +13,7 @@ REQUIREMENTS = [
     'aldryn_common',
     'django-hvad',
     'unidecode',
+    'django-appdata',
 ]
 
 CLASSIFIERS = [
