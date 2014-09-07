@@ -49,6 +49,18 @@ class BlogTagsPlugin(BlogPlugin):
         return context
 
 
+class BlogCategoriesPlugin(BlogPlugin):
+
+    render_template = 'aldryn_blog/plugins/categories.html'
+    name = _('Categories')
+    model = CMSPlugin
+
+    def render(self, context, instance, placeholder):
+        context['categories'] = models.Post.published.get_categories(
+            language=instance.language)
+        return context
+
+
 class BlogArchivePlugin(BlogPlugin):
 
     render_template = 'aldryn_blog/plugins/archive.html'
@@ -64,4 +76,5 @@ class BlogArchivePlugin(BlogPlugin):
 plugin_pool.register_plugin(LatestEntriesPlugin)
 plugin_pool.register_plugin(AuthorsPlugin)
 plugin_pool.register_plugin(BlogTagsPlugin)
+plugin_pool.register_plugin(BlogCategoriesPlugin)
 plugin_pool.register_plugin(BlogArchivePlugin)
