@@ -46,6 +46,7 @@ Add below apps to ``INSTALLED_APPS``: ::
         'easy_thumbnails',
         'filer',
         'taggit',
+        'hvad',
         # for search
         'aldryn_search',
         'haystack',
