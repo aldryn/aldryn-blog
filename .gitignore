@@ -4,3 +4,5 @@ build/*
 *.egg-info/*
 .idea
 *.DS_Store
+.tox/
+env/
