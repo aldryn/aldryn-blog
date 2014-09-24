@@ -201,7 +201,9 @@ class Post(models.Model):
 class LatestEntriesPlugin(CMSPlugin):
 
     latest_entries = models.IntegerField(default=5, help_text=_('The number of latests entries to be displayed.'))
-    tags = models.ManyToManyField('taggit.Tag', blank=True, help_text=_('Show only the blog posts tagged with chosen tags.'))
+    tags = models.ManyToManyField(
+        'taggit.Tag', blank=True, help_text=_('Show only the blog posts tagged with chosen tags.')
+    )
 
     def __unicode__(self):
         """
@@ -226,7 +228,8 @@ class AuthorsPlugin(CMSPlugin):
 
 
 def force_language(sender, instance, **kwargs):
-    if issubclass(sender, CMSPlugin) and instance.placeholder and instance.placeholder.slot == 'aldryn_blog_post_content':
+    if issubclass(sender, CMSPlugin) and instance.placeholder \
+            and instance.placeholder.slot == 'aldryn_blog_post_content':
         instance.language = settings.ALDRYN_BLOG_PLUGIN_LANGUAGE
 
 
