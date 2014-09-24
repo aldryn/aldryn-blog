@@ -27,7 +27,7 @@ class BlogIndex(get_index_base()):
 
     def get_index_queryset(self, language):
         queryset = self.get_model().published.all()
-        return queryset.filter(Q(language=language)|Q(language__isnull=True))
+        return queryset.filter(Q(language=language) | Q(language__isnull=True))
 
     def get_model(self):
         return Post
@@ -38,7 +38,7 @@ class BlogIndex(get_index_base()):
         plugins = obj.content.cmsplugin_set.filter(language=language)
         for base_plugin in plugins:
             instance, plugin_type = base_plugin.get_plugin_instance()
-            if not instance is None:
+            if instance is not None:
                 content = strip_tags(instance.render_plugin(context=RequestContext(request)))
                 text_bits.append(content)
         return ' '.join(text_bits)
