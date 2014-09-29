@@ -56,7 +56,7 @@ def get_related_posts(post, by_categories=True, by_tags=True, by_latest=True, wa
     given_language = post.language
 
     found = None
-    all_posts = Post.objects.filter(language=given_language).order_by('publication_start')
+    all_posts = Post.objects.filter(language=given_language).exclude(id=post.id).order_by('publication_start')
 
     if by_categories:
         posts_by_category = all_posts.filter(category_id=given_category)
