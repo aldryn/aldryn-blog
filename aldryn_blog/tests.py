@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.translation import override
 
 from cms import api
 from cms.utils import get_cms_setting
@@ -21,18 +22,19 @@ class PostAddTest(TestCase):
             'page', self.template, self.language, published=True,
             apphook='BlogApp', apphook_namespace='Blog'
         )
+        api.create_title('fr', 'french page', self.page)
+        self.page.publish('fr')
         self.placeholder = self.page.placeholders.all()[0]
         self.user = User.objects.create(first_name='Peter', last_name='Muster')
 
     def test_create_post(self):
         """
-        We can create a post post
+        We can create a post
         """
         title = 'First'
-        before_count = Post.objects.count()
-        Post.objects.create(title=title, slug='first-blog', author=self.user)
-        after_count = Post.objects.count()
-        self.assertEqual(before_count + 1, after_count)
+        post = Post.objects.create(title=title, slug='first-blog', author=self.user)
+        response = self.client.get(post.get_absolute_url())
+        self.assertContains(response, title)
 
     def test_delete_post(self):
         """
@@ -45,7 +47,7 @@ class PostAddTest(TestCase):
 
     def test_publication_start(self):
         """
-        We'll create a Post with a future start & end and check if it is shownB
+        We'll create a Post with a future start & end and check if it is shown
         """
         title = 'Future Blog Post'
         date = timezone.now()
@@ -61,7 +63,7 @@ class PostAddTest(TestCase):
 
     def test_publication_end(self):
         """
-        We'll create an Post with a pasted end and check if it isn't shown
+        We'll create an Post with a past end and check if it isn't shown
         """
         title = 'Past Blog Post'
         date = timezone.now() - timezone.timedelta(minutes=1)
@@ -117,3 +119,40 @@ class PostAddTest(TestCase):
         url = reverse('aldryn_blog:category-posts', kwargs=kwargs)
         response = self.client.get(url)
         self.assertContains(response, post.title)
+
+    def test_language(self):
+        """
+        if the wrong language is set in the url we should get a redirect to the main homepage
+        """
+
+        title = 'French Blog Post'
+
+        post = Post.objects.create(
+            title=title, slug='french-post',
+            author=self.user, language='fr',
+        )
+
+        with override('fr'):
+            # List View
+            url = reverse('aldryn_blog:latest-posts')
+            response = self.client.get(url)
+            self.assertContains(response, title)
+
+            # Detail View
+            url = post.get_absolute_url()
+            response = self.client.get(url)
+            self.assertContains(response, title)
+
+        with override('en'):
+            # List View
+            url = reverse('aldryn_blog:latest-posts')
+            response = self.client.get(url)
+            self.assertNotContains(response, title)
+
+            with self.settings(ALDRYN_BLOG_SHOW_ALL_LANGUAGES=True):
+                response = self.client.get(url)
+                self.assertContains(response, title)
+
+            # Detail View
+            # Does not raise - not sure if intended?
+            # self.assertRaises(NoReverseMatch, post.get_absolute_url)

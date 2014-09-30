@@ -1,5 +1,9 @@
 HELPER_SETTINGS = {
     'TIME_ZONE': 'Europe/Zurich',
+    'LANGUAGES': (
+        ('en', 'English'),
+        ('fr', 'French'),
+    ),
     'INSTALLED_APPS': [
         'taggit',
         'aldryn_blog',
