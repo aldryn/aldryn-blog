@@ -5,11 +5,14 @@ from django.utils.translation import ugettext_lazy as _
 from cms.toolbar_pool import toolbar_pool
 from cms.toolbar_base import CMSToolbar
 
-from aldryn_blog import request_post_identifier
+from . import request_post_identifier
+from .models import Post
 
 
 @toolbar_pool.register
 class BlogToolbar(CMSToolbar):
+    watch_models = (Post, )
+
     def populate(self):
         if not (self.is_current_app and self.request.user.has_perm('aldryn_blog.add_post')):
             return
