@@ -2,6 +2,13 @@
 Aldryn Blog App
 ===============
 
+.. image:: https://travis-ci.org/aldryn/aldryn-blog.svg?branch=master
+    :target: https://travis-ci.org/aldryn/aldryn-blog
+
+.. image:: https://img.shields.io/coveralls/aldryn/aldryn-blog.svg
+  :target: https://coveralls.io/r/aldryn/aldryn-blog
+
+
 Simple blogging application. It allows you to:
 
 - write a tagable post message
