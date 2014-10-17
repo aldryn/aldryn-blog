@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-17 10:31+0200\n"
+"POT-Creation-Date: 2014-10-17 14:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cms_app.py:8 cms_toolbar.py:16 templates/aldryn_blog/post_list.html:9
+#: cms_app.py:8 cms_toolbar.py:19 templates/aldryn_blog/post_list.html:30
 msgid "Blog"
 msgstr "Blog"
 
@@ -26,118 +25,176 @@ msgstr "Blog"
 msgid "Latest Blog Entries"
 msgstr "Aktuellste Blogeinträge"
 
-#: cms_plugins.py:31
-msgid "Author Blog Entries"
-msgstr "Verfasser Blogeinträge"
+#: cms_plugins.py:31 templates/aldryn_blog/author_list.html:7
+msgid "Blog Authors"
+msgstr ""
 
 #: cms_plugins.py:43
 msgid "Tags"
 msgstr "Tags"
 
-#: cms_plugins.py:55
+#: cms_plugins.py:54
 msgid "Archive"
 msgstr "Archiv"
 
-#: cms_toolbar.py:17
+#: cms_toolbar.py:20
 msgid "Add Blog Post"
 msgstr "Blogeintrag hinzufügen"
 
-#: cms_toolbar.py:22
+#: cms_toolbar.py:24
 msgid "Edit Blog Post"
 msgstr "Blogeintrag bearbeiten"
 
-#: feeds.py:16
+#: feeds.py:19
 #, python-format
 msgid "Blog posts on %(site_name)s"
 msgstr "Blogeinträge auf %(site_name)s"
 
-#: models.py:82
-msgid "Title"
-msgstr "Titel"
+#: forms.py:96
+msgid "the conflicting object"
+msgstr ""
 
-#: models.py:83
+#: forms.py:97
+#, python-format
+msgid "Conflicting slug. See %(address)s."
+msgstr ""
+
+#: models.py:44
+msgid "Name"
+msgstr ""
+
+#: models.py:46 models.py:158
 msgid "Slug"
 msgstr "Slug"
 
-#: models.py:84
+#: models.py:49
+msgid ""
+"Auto-generated. Clean it to have it re-created. WARNING! Used in the URL. If "
+"changed, the URL will change. "
+msgstr "Wird in der URL verwendet. Wenn verändert, ändert sich auch die URL."
+
+#: models.py:55
+msgid "Ordering"
+msgstr ""
+
+#: models.py:60 models.py:198
+msgid "Category"
+msgstr ""
+
+#: models.py:61
+msgid "Categories"
+msgstr ""
+
+#: models.py:156
+msgid "Title"
+msgstr "Titel"
+
+#: models.py:162
 msgid ""
 "Used in the URL. If changed, the URL will change. Clean it to have it re-"
 "created."
-msgstr "Wird in der URL verwendet. Wenn der Slug geändert wird, ändert sich auch die URL. Bereinigen und es wird neu kreiert. "
+msgstr ""
+"Wird in der URL verwendet. Wenn der Slug geändert wird, ändert sich auch die "
+"URL. Bereinigen und es wird neu kreiert. "
 
-#: models.py:86
+#: models.py:165
 msgid "language"
 msgstr "Sprache"
 
-#: models.py:87
+#: models.py:170
 msgid "leave empty to display in all languages"
 msgstr "Leer lassen um in allen Sprachen anzuzeigen"
 
-#: models.py:88
+#: models.py:172
 msgid "Key Visual"
 msgstr "Hauptbild"
 
-#: models.py:89
+#: models.py:174
 msgid "Lead-in"
 msgstr "Anriss"
 
-#: models.py:90
+#: models.py:175
 msgid ""
 "Will be displayed in lists, and at the start of the detail page (in bold)"
 msgstr "Wird in Listen angezeigt und am Beinn der Detailseite"
 
-#: models.py:92
+#: models.py:178
 msgid "Author"
 msgstr "Verfasser"
 
-#: models.py:93
+#: models.py:181
+msgid "Co-Authors"
+msgstr ""
+
+#: models.py:187
 msgid "Published Since"
 msgstr "Veröffentlicht seit"
 
-#: models.py:94
+#: models.py:189
 msgid "Used in the URL. If changed, the URL will change."
 msgstr "Wird in der URL verwendet. Wenn verändert, ändert sich auch die URL."
 
-#: models.py:95
+#: models.py:192
 msgid "Published Until"
 msgstr "Veröffentlicht bis"
 
-#: models.py:125
+#: models.py:241
 msgid "The number of latests entries to be displayed."
 msgstr "Die Anzahl aktuellster Einträge, die angezeigt wird."
 
-#: models.py:126
+#: models.py:246
 msgid "Show only the blog posts tagged with chosen tags."
 msgstr "Nur Blogeinträge mit gewählten Tag anzeigen."
 
-#: models.py:145
-msgid "Authors"
-msgstr "Verfasser"
-
-#: models.py:146
-msgid "The number of author entries to be displayed."
-msgstr "Die Anzahl Verassereinträge die angezeigt wird."
-
-#: templates/aldryn_blog/post_list.html:7
-msgid "Entries by"
-msgstr "Einträge von"
-
-#: templates/aldryn_blog/post_list.html:8
-msgid "Blog Archive"
-msgstr "Blog Archiv"
-
-#: templates/aldryn_blog/includes/blog_item.html:13
-msgid "by"
-msgstr "von"
-
-#: templates/aldryn_blog/includes/blog_item.html:20
-msgid "read more"
-msgstr "mehr"
-
-#: templates/aldryn_blog/includes/blog_item.html:23
+#: templates/aldryn_blog/author_list.html:12
+#: templates/aldryn_blog/category_list.html:12
+#: templates/aldryn_blog/tag_list.html:12
+#: templates/aldryn_blog/includes/blog_items.html:22
+#: templates/aldryn_blog/plugins/archive.html:20
+#: templates/aldryn_blog/plugins/authors.html:7
+#: templates/aldryn_blog/plugins/tags.html:9
 msgid "No entry found."
 msgstr "Keine Einträge gefunden."
 
-#: templates/aldryn_blog/plugins/tags.html:9
-msgid "There are no blog tags."
-msgstr "Keine Blog-Tags vorhanden."
+#: templates/aldryn_blog/category_list.html:7
+msgid "Blog Categories"
+msgstr ""
+
+#: templates/aldryn_blog/post_detail.html:10
+#: templates/aldryn_blog/includes/blog_items.html:12
+msgid "by"
+msgstr "von"
+
+#: templates/aldryn_blog/post_detail.html:18
+#: templates/aldryn_blog/post_list.html:34
+msgid "Back"
+msgstr ""
+
+#: templates/aldryn_blog/post_list.html:27
+msgid "Entries by"
+msgstr "Einträge von"
+
+#: templates/aldryn_blog/post_list.html:28
+msgid "Blog Archive"
+msgstr "Blog Archiv"
+
+#: templates/aldryn_blog/post_list.html:29
+msgid "Blog Tag"
+msgstr ""
+
+#: templates/aldryn_blog/tag_list.html:7
+msgid "Blog Tags"
+msgstr ""
+
+#: templates/aldryn_blog/includes/blog_items.html:19
+msgid "read more"
+msgstr "mehr"
+
+#~ msgid "Author Blog Entries"
+#~ msgstr "Verfasser Blogeinträge"
+
+#~ msgid "The number of author entries to be displayed."
+#~ msgstr "Die Anzahl Verassereinträge die angezeigt wird."
+
+#~ msgid "There are no blog tags."
+#~ msgstr "Keine Blog-Tags vorhanden."
