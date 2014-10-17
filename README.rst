@@ -52,6 +52,7 @@ Add below apps to ``INSTALLED_APPS``: ::
         'djangocms_text_ckeditor',
         'easy_thumbnails',
         'filer',
+        'hvad',
         'taggit',
         # for search
         'aldryn_search',
