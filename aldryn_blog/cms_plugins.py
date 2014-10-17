@@ -44,8 +44,7 @@ class BlogTagsPlugin(BlogPlugin):
     model = CMSPlugin
 
     def render(self, context, instance, placeholder):
-        context['tags'] = models.Post.published.get_tags(
-            language=instance.language)
+        context['tags'] = models.Post.published.get_tags(language=instance.language)
         return context
 
 
@@ -56,8 +55,7 @@ class BlogArchivePlugin(BlogPlugin):
     model = CMSPlugin
 
     def render(self, context, instance, placeholder):
-        context['dates'] = models.Post.published.get_months(
-            language=instance.language)
+        context['dates'] = models.Post.published.get_months(language=instance.language)
         return context
 
 

@@ -42,9 +42,13 @@ class Category(TranslatableModel):
 
     translations = TranslatedFields(
         name=models.CharField(_('Name'), max_length=255),
-        slug=models.SlugField(_('Slug'), max_length=255, blank=True,
-                              help_text=_('Auto-generated. Clean it to have it re-created. '
-                                          'WARNING! Used in the URL. If changed, the URL will change. ')),
+        slug=models.SlugField(
+            verbose_name=_('Slug'),
+            max_length=255,
+            blank=True,
+            help_text=_('Auto-generated. Clean it to have it re-created. '
+                        'WARNING! Used in the URL. If changed, the URL will change. ')
+        ),
         meta={'unique_together': [['slug', 'language_code']]}
     )
 
@@ -205,10 +209,13 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        kwargs = {'year': self.publication_start.year,
-                  'month': self.publication_start.month,
-                  'day': self.publication_start.day,
-                  'slug': self.slug}
+        kwargs = {
+            'year': self.publication_start.year,
+            'month': self.publication_start.month,
+            'day': self.publication_start.day,
+            'slug': self.slug
+        }
+
         if self.language and not getattr(settings, 'ALDRYN_BLOG_SHOW_ALL_LANGUAGES', False):
             with override(self.language):
                 return reverse('aldryn_blog:post-detail', kwargs=kwargs)
@@ -229,9 +236,14 @@ class Post(models.Model):
 
 class LatestEntriesPlugin(CMSPlugin):
 
-    latest_entries = models.IntegerField(default=5, help_text=_('The number of latests entries to be displayed.'))
+    latest_entries = models.IntegerField(
+        default=5,
+        help_text=_('The number of latests entries to be displayed.')
+    )
     tags = models.ManyToManyField(
-        'taggit.Tag', blank=True, help_text=_('Show only the blog posts tagged with chosen tags.')
+        to='taggit.Tag',
+        blank=True,
+        help_text=_('Show only the blog posts tagged with chosen tags.')
     )
 
     def __unicode__(self):
@@ -245,13 +257,15 @@ class LatestEntriesPlugin(CMSPlugin):
 
     def get_posts(self):
         posts = Post.published.filter_by_language(self.language)
-        tags = list(self.tags.all())
-        if tags:
+        tags = self.tags.values_list('pk', flat=True)
+
+        if tags.exists():
             posts = posts.filter(tags__in=tags)
         return posts[:self.latest_entries]
 
 
 class AuthorsPlugin(CMSPlugin):
+
     def get_authors(self):
         return generate_slugs(get_blog_authors())
 
