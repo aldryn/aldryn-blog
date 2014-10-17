@@ -150,22 +150,51 @@ class PublishedManager(RelatedManager):
 class Post(models.Model):
 
     title = models.CharField(_('Title'), max_length=255)
-    slug = models.CharField(_('Slug'), max_length=255, unique=True, blank=True,
-                            help_text=_('Used in the URL. If changed, the URL will change. '
-                                        'Clean it to have it re-created.'))
-    language = models.CharField(_('language'), max_length=5, null=True, blank=True, choices=settings.LANGUAGES,
-                                help_text=_('leave empty to display in all languages'))
+    slug = models.SlugField(
+        verbose_name=_('Slug'),
+        max_length=255,
+        unique=True,
+        blank=True,
+        help_text=_('Used in the URL. If changed, the URL will change. Clean it to have it re-created.')
+    )
+    language = models.CharField(
+        verbose_name=_('language'),
+        max_length=5,
+        null=True,
+        blank=True,
+        choices=settings.LANGUAGES,
+        help_text=_('leave empty to display in all languages')
+    )
     key_visual = FilerImageField(verbose_name=_('Key Visual'), blank=True, null=True)
-    lead_in = HTMLField(_('Lead-in'),
-                        help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)'))
+    lead_in = HTMLField(
+        verbose_name=_('Lead-in'),
+        help_text=_('Will be displayed in lists, and at the start of the detail page (in bold)')
+    )
     content = PlaceholderField('aldryn_blog_post_content', related_name='aldryn_blog_posts')
     author = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name=_('Author'))
     coauthors = models.ManyToManyField(
-        to=AUTH_USER_MODEL, verbose_name=_('Co-Authors'), null=True, blank=True, related_name='aldryn_blog_coauthors')
-    publication_start = models.DateTimeField(_('Published Since'), default=timezone.now,
-                                             help_text=_('Used in the URL. If changed, the URL will change.'))
-    publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
-    category = models.ForeignKey(Category, verbose_name=_('Category'), null=True, blank=True)
+        to=AUTH_USER_MODEL,
+        verbose_name=_('Co-Authors'),
+        null=True,
+        blank=True,
+        related_name='aldryn_blog_coauthors'
+    )
+    publication_start = models.DateTimeField(
+        verbose_name=_('Published Since'),
+        default=timezone.now,
+        help_text=_('Used in the URL. If changed, the URL will change.')
+    )
+    publication_end = models.DateTimeField(
+        verbose_name=_('Published Until'),
+        null=True,
+        blank=True
+    )
+    category = models.ForeignKey(
+        to=Category,
+        verbose_name=_('Category'),
+        null=True,
+        blank=True
+    )
 
     objects = RelatedManager()
     published = PublishedManager()
