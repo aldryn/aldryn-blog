@@ -7,13 +7,21 @@ from django.contrib import admin
 
 import cms
 from cms.admin.placeholderadmin import PlaceholderAdmin, FrontendEditableAdmin
+
 from hvad.admin import TranslatableAdmin
 
-from .forms import PostForm, CategoryForm
+from .forms import (
+    BlogPostMultiForm,
+    CategoryForm,
+    PostForm,
+)
 from .models import Post, Category
 
 
 class PostAdmin(FrontendEditableAdmin, PlaceholderAdmin):
+
+    # used only when enabling app_data and subclassing
+    multiform = BlogPostMultiForm
 
     render_placeholder_language_tabs = False
     list_display = ['title', 'author', 'publication_start', 'publication_end']

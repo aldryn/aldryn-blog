@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
+from unidecode import unidecode
+
 from django import forms
 from django.template.defaultfilters import slugify
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, get_language
 
-import django_select2
 from hvad.forms import TranslatableModelForm
+
+from app_data.forms import multiform_factory
+
+import django_select2
+
 import taggit
-from unidecode import unidecode
+
+from .models import Post
 
 
 class LatestEntriesForm(forms.ModelForm):
@@ -113,3 +120,7 @@ class CategoryForm(AutoSlugForm):
 
     class Meta:
         fields = ['name', 'slug']
+
+
+# Used by app data
+BlogPostMultiForm = multiform_factory(Post, form=PostForm)
