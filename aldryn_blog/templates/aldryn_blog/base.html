@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block extend_breadcrumb %}
     {{ block.super }}
-    {% block blog_breadcrumb %}
-    {% endblock blog_breadcrumb %}
-{% endblock extend_breadcrumb%}
+    {% block blog_breadcrumb %}{% endblock blog_breadcrumb %}
+{% endblock extend_breadcrumb %}
 
 {% block content %}
-<div class="app app-blog">
-    {% block content_blog %}{% endblock %}
+<div class="aldryn aldryn-blog">
+    {% block blog_title %}<h2>{% trans "Blog" %}</h2>{% endblock %}
+    {% block blog_content %}{% endblock %}
 </div>
 {% endblock %}

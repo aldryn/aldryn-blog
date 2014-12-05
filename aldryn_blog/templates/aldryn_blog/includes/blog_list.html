@@ -1,0 +1,27 @@
+{% load i18n aldryn_blog_tags %}
+{% load url from future %}
+
+<div class="aldryn aldryn-blog aldryn-blog-list">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ title }}</h3>
+        </div>
+        <div class="list-group">
+            {% for entry in object_list %}
+                {% if type == "categories" %}
+                <a href="{% url 'aldryn_blog:category-posts' category=entry.slug %}" class="list-group-item">{{ entry.name }} <span class="badge">{{ entry.count }}</span></a>
+                {% endif %}
+
+                {% if type == "authors" %}
+                <a href="{% url 'aldryn_blog:author-posts' entry.slug %}" class="list-group-item">{{ entry.get_full_name }} <span class="badge">{{ entry.post_set.count }}</span></a>
+                {% endif %}
+
+                {% if type == "tags" %}
+                <a href="{% url 'aldryn_blog:tagged-posts' entry.slug %}" class="list-group-item">{{ entry.name }} <span class="badge">{{ entry.count }}</span></a>
+                {% endif %}
+            {% empty %}
+            <p class="list-group-item disabled">{% trans "No entry found." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
