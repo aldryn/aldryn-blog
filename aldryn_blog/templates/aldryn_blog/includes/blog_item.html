@@ -32,7 +32,7 @@
         {% if post.key_visual_id %}
             <p>
                 <a href="{{ post.get_absolute_url }}">
-                    <img src="{% thumbnail post.key_visual 900x300 crop subject_location=post.key_visual.subject_location %}" alt="{{ post.key_visual.alt }}" class="img-responsive" />
+                    <img src="{% thumbnail post.key_visual 800x300 crop subject_location=post.key_visual.subject_location %}" alt="{{ post.key_visual.alt }}" class="img-responsive" />
                 </a>
             </p>
             <hr />
