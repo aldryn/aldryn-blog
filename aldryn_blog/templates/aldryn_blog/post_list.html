@@ -2,45 +2,45 @@
 {% load i18n thumbnail aldryn_blog_tags %}
 
 {% block blog_breadcrumb %}
-{% if author %}
-    <li>{{ author.get_full_name }}</li>
-{% elif archive_date %}
-    {% if year and month and day %}
-        <li><a href="{% url 'aldryn_blog:archive-year' year=year %}">{{ year }}</a></li>
-        <li><a href="{% url 'aldryn_blog:archive-month' year=year month=month %}">{{ month }}</a></li>
-        <li>{{ day }}</li>
-    {% elif year and month %}
-        <li><a href="{% url 'aldryn_blog:archive-year' year=year %}">{{ year }}</a></li>
-        <li>{{ month }}</li>
-    {% elif year %}
-        <li>{{ year }}</li>
+    {% if author %}
+        <li>{{ author.get_full_name }}</li>
+    {% elif archive_date %}
+        {% if year and month and day %}
+            <li><a href="{% url 'aldryn_blog:archive-year' year=year %}">{{ year }}</a></li>
+            <li><a href="{% url 'aldryn_blog:archive-month' year=year month=month %}">{{ month }}</a></li>
+            <li>{{ day }}</li>
+        {% elif year and month %}
+            <li><a href="{% url 'aldryn_blog:archive-year' year=year %}">{{ year }}</a></li>
+            <li>{{ month }}</li>
+        {% elif year %}
+            <li>{{ year }}</li>
+        {% endif %}
+    {% elif tagged_entries %}
+        <li>{{ tagged_entries|capfirst }}</li>
     {% endif %}
-{% elif tagged_entries %}
-    <li>{{ tagged_entries|capfirst }}</li>
-{% endif %}
 {% endblock blog_breadcrumb %}
 
 {% block blog_title %}
-<h2>
-    {% if author %}{% trans "Entries by" %} {{ author.get_full_name }}{% elif archive_date %}
-    {% trans "Blog Archive" %} &ndash; {% if day %}{{ archive_date|date:'d' }}. {% endif %}{% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}{% elif tagged_entries %}
-    {% trans "Blog Tag" %} &ndash; {{ tagged_entries|capfirst }}{% else %}
-    {% trans "Blog" %}{% endif %}
-</h2>
+    <h2>
+        {% if author %}{% trans "Entries by" %} {{ author.get_full_name }}{% elif archive_date %}
+        {% trans "Blog Archive" %} &ndash; {% if day %}{{ archive_date|date:'d' }}. {% endif %}{% if month %}{{ archive_date|date:'F' }} {% endif %}{{ year }}{% elif tagged_entries %}
+        {% trans "Blog Tag" %} &ndash; {{ tagged_entries|capfirst }}{% else %}
+        {% trans "Blog" %}{% endif %}
+    </h2>
 {% endblock %}
 
 {% block blog_content %}
-<div class="aldryn-blog-posts">
-    {% for post in latest|posts:object_list %}
-        {% include "aldryn_blog/includes/blog_item.html" %}
-    {% endfor %}
+    <div class="aldryn-blog-posts">
+        {% for post in latest|posts:object_list %}
+            {% include "aldryn_blog/includes/blog_item.html" %}
+        {% endfor %}
 
-    {% include "aldryn_common/paginator.html" %}
+        {% include "aldryn_common/paginator.html" %}
 
-    {% if posts.author or archive_date or tagged_entries %}
-    <ul class="pager">
-        <li class="previous"><a href="{% url 'aldryn_blog:latest-posts' %}"><span aria-hidden="true">&larr;</span> {% trans "Back" %}</a></li>
-    </ul>
-    {% endif %}
-</div>
+        {% if posts.author or archive_date or tagged_entries %}
+            <ul class="pager">
+                <li class="previous"><a href="{% url 'aldryn_blog:latest-posts' %}"><span aria-hidden="true">&larr;</span> {% trans "Back" %}</a></li>
+            </ul>
+        {% endif %}
+    </div>
 {% endblock %}

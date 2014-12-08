@@ -3,53 +3,53 @@
 
 <article>
     {% block blog_headline %}
-    {% if not detail_view %}<h2><a href="{{ post.get_absolute_url }}">{% render_model post "title" %}</a></h2>{% endif %}
+        {% if not detail_view %}<h2><a href="{{ post.get_absolute_url }}">{% render_model post "title" %}</a></h2>{% endif %}
     {% endblock %}
 
     {% block blog_meta %}
-    <div class="aldryn-blog-meta">
-        <span class="icon icon-pencil"></span>
-        {% trans "by" %} <a href="{% url 'aldryn_blog:author-posts' post.author.get_full_name|slugify %}">{{ post.author|user_name }}</a>
-        &nbsp;
-        {% if post.category %}
-            <span class="icon icon-book"></span>
-            <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+        <div class="aldryn-blog-meta">
+            <span class="icon icon-pencil"></span>
+            {% trans "by" %} <a href="{% url 'aldryn_blog:author-posts' post.author.get_full_name|slugify %}">{{ post.author|user_name }}</a>
             &nbsp;
-        {% endif %}
-        {% if post.tags %}
-            <span class="icon icon-bookmark"></span>
-            {% for tag in post.tags.all %}
-                <a href="{% url 'aldryn_blog:tagged-posts' tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-            &nbsp;
-        {% endif %}
-        <span class="icon icon-clock-o"></span> {{ post.publication_start|date }}
-    </div>
-    <hr />
+            {% if post.category %}
+                <span class="icon icon-book"></span>
+                <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+                &nbsp;
+            {% endif %}
+            {% if post.tags %}
+                <span class="icon icon-bookmark"></span>
+                {% for tag in post.tags.all %}
+                    <a href="{% url 'aldryn_blog:tagged-posts' tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                &nbsp;
+            {% endif %}
+            <span class="icon icon-clock-o"></span> {{ post.publication_start|date }}
+        </div>
+        <hr />
     {% endblock %}
 
     {% block blog_visual %}
-    {% if post.key_visual_id %}
-    <p>
-        <a href="{{ post.get_absolute_url }}">
-            <img src="{% thumbnail post.key_visual 900x300 crop subject_location=post.key_visual.subject_location %}" alt="{{ post.key_visual.alt }}" class="img-responsive" />
-        </a>
-    </p>
-    <hr />
-    {% endif %}
+        {% if post.key_visual_id %}
+            <p>
+                <a href="{{ post.get_absolute_url }}">
+                    <img src="{% thumbnail post.key_visual 900x300 crop subject_location=post.key_visual.subject_location %}" alt="{{ post.key_visual.alt }}" class="img-responsive" />
+                </a>
+            </p>
+            <hr />
+        {% endif %}
     {% endblock %}
 
     {% block blog_content %}
-    <div class="lead">{% render_model post "lead_in" "lead_in" "" safe %}</div>
-    {% render_placeholder post.content language placeholder_language %}
+        <div class="lead">{% render_model post "lead_in" "lead_in" "" safe %}</div>
+        {% render_placeholder post.content language placeholder_language %}
     {% endblock %}
 
     {% if detail_view %}
-    <ul class="pager">
-        <li class="previous"><a href="{% url 'aldryn_blog:latest-posts' %}"><span aria-hidden="true">&larr;</span> {% trans "Back" %}</a></li>
-    </ul>
+        <ul class="pager">
+            <li class="previous"><a href="{% url 'aldryn_blog:latest-posts' %}"><span aria-hidden="true">&larr;</span> {% trans "Back" %}</a></li>
+        </ul>
     {% else %}
-    <p class="text-right"><a href="{{ post.get_absolute_url }}">{% trans "read more" %}</a></p>
-    <hr />
+        <p class="text-right"><a href="{{ post.get_absolute_url }}">{% trans "read more" %}</a></p>
+        <hr />
     {% endif %}
 </article>
