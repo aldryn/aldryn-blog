@@ -3,7 +3,7 @@
 
 <div class="aldryn aldryn-blog aldryn-blog-tags">
     {% for tag in tags %}
-        <a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="label label-primary">{{ tag.name }} <span class="label-badge">({{ tag.count }})</span></a>
+        <a href="{% url 'aldryn_blog:tagged-posts' tag=tag.slug %}" class="label label-primary">{{ tag.name }} <span class="label-badge">{{ tag.count }}</span></a>
     {% empty %}
         <p>{% trans "No entry found." %}</p>
     {% endfor %}
