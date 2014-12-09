@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block blog_content %}
-    <div class="aldryn-blog-posts">
+    <div class="aldryn-blog-entries">
         {% for post in latest|posts:object_list %}
             {% include "aldryn_blog/includes/blog_item.html" %}
         {% endfor %}
