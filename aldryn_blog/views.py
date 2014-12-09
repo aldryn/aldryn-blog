@@ -79,7 +79,7 @@ class AuthorEntriesView(BasePostView, ListView):
     def get_queryset(self):
         qs = BasePostView.get_queryset(self)
         if 'slug' in self.kwargs:
-            qs = qs.filter(author__username=get_user_from_slug(self.kwargs['slug']))
+            qs = qs.filter(author=get_user_from_slug(self.kwargs['slug']))
         return qs
 
     def get_context_data(self, **kwargs):
@@ -121,7 +121,7 @@ class TagsListView(generic.ListView):
 
     def get_queryset(self):
         language = get_language_from_request(self.request, check_path=True)
-        return Post.published.get_tags(language)
+        return Post.published.get_tags(language=language)
 
 
 class TaggedListView(BasePostView, ListView):
