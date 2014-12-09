@@ -1,8 +1,6 @@
 {% extends "aldryn_blog/base.html" %}
 {% load cms_tags %}
 
-{% block blog_title %}<h2>{% render_model post "title" %}</h2>{% endblock %}
-
 {% block blog_content %}
     {% include "aldryn_blog/includes/blog_item.html" with detail_view="true" %}
 {% endblock %}

@@ -3,7 +3,13 @@
 
 <article>
     {% block blog_headline %}
-        {% if not detail_view %}<h2><a href="{{ post.get_absolute_url }}">{% render_model post "title" %}</a></h2>{% endif %}
+        <h3>
+            {% if not detail_view %}
+                <a href="{{ post.get_absolute_url }}">{% render_model post "title" %}</a>
+            {% else %}
+                {% render_model post "title" %}
+            {% endif %}
+        </h3>
     {% endblock %}
 
     {% block blog_meta %}
@@ -31,9 +37,9 @@
     {% block blog_visual %}
         {% if post.key_visual_id %}
             <p>
-                <a href="{{ post.get_absolute_url }}">
+                {% if not detail_view %}<a href="{{ post.get_absolute_url }}">{% endif %}
                     <img src="{% thumbnail post.key_visual 800x300 crop subject_location=post.key_visual.subject_location %}" alt="{{ post.key_visual.alt }}" class="img-responsive" />
-                </a>
+                {% if not detail_view %}</a>{% endif %}
             </p>
             <hr />
         {% endif %}
@@ -41,7 +47,9 @@
 
     {% block blog_content %}
         <div class="lead">{% render_model post "lead_in" "lead_in" "" safe %}</div>
-        {% render_placeholder post.content language placeholder_language %}
+        {% if detail_view %}
+            {% render_placeholder post.content language placeholder_language %}
+        {% endif %}
     {% endblock %}
 
     {% if detail_view %}
