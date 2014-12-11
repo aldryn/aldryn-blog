@@ -54,6 +54,7 @@ Add below apps to ``INSTALLED_APPS``: ::
         'filer',
         'hvad',
         'taggit',
+        'hvad',
         # for search
         'aldryn_search',
         'haystack',
