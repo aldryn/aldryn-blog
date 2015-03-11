@@ -1,5 +1,5 @@
 {
-	"name": "Blog",
+	"name": "Aldryn Blog",
 	"description": "Adds blogging abilities to django CMS",
 	"url": "https://github.com/aldryn/aldryn-blog",
 	"package-name": "aldryn-blog",
