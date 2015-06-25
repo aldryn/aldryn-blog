@@ -2,6 +2,9 @@
 Aldryn Blog App
 ===============
 
+Please note that this application has been superseded by `Aldryn News & Blog 
+<https://github.com/aldryn/aldryn-newsblog>`_, and may not receive any future updates.
+
 .. image:: https://travis-ci.org/aldryn/aldryn-blog.svg?branch=master
     :target: https://travis-ci.org/aldryn/aldryn-blog
 
